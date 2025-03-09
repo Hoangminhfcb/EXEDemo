@@ -1,0 +1,5 @@
+services:
+  - type: static
+    name: my-blazor-app
+    buildCommand: "dotnet publish -c Release -o out"
+    publishDirectory: "out/wwwroot"
