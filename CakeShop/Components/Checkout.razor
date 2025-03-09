@@ -1,5 +1,121 @@
-﻿<h3>Checkout</h3>
+﻿<div class="container">
+    <form id="orderForm">
+        <!-- Personal Information -->
+        <div>
+            <label for="orderName">Tên người đặt</label>
+            <input type="text" id="orderName" placeholder="">
+
+            <label for="orderPhone">Số điện thoại người đặt</label>
+            <input type="tel" id="orderPhone" placeholder="">
+        </div>
+
+        <!-- Delivery Date -->
+        <div>
+            <label for="deliveryDate">Ngày giao</label>
+
+            <div class="calendar-header">
+                <span>Tháng Ba, 2025</span>
+                <div>
+                    <button type="button" class="btn-nav">&#8249;</button>
+                    <button type="button" class="btn-nav">&#8250;</button>
+                </div>
+            </div>
+
+            <div class="calendar">
+                <div class="day-label">Hai</div>
+                <div class="day-label">Ba</div>
+                <div class="day-label">Tư</div>
+                <div class="day-label">Năm</div>
+                <div class="day-label">Sáu</div>
+                <div class="day-label">Bảy</div>
+                <div class="day-label">CN</div>
+
+                <!-- Empty spaces for days before month starts -->
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="calendar-day">1</div>
+                <div class="calendar-day">2</div>
+
+                <div class="calendar-day">3</div>
+                <div class="calendar-day">4</div>
+                <div class="calendar-day">5</div>
+                <div class="calendar-day">6</div>
+                <div class="calendar-day">7</div>
+                <div class="calendar-day">8</div>
+                <div class="calendar-day active">9</div>
+
+                <div class="calendar-day">10</div>
+                <div class="calendar-day">11</div>
+                <div class="calendar-day">12</div>
+                <div class="calendar-day">13</div>
+                <div class="calendar-day">14</div>
+                <div class="calendar-day">15</div>
+                <div class="calendar-day">16</div>
+            </div>
+        </div>
+
+        <!-- Delivery Time -->
+        <div>
+            <label for="deliveryTime">Giờ giao</label>
+            <select id="deliveryTime">
+                <option value="" selected disabled>Chọn khung giờ...</option>
+                <option value="morning">8:00 - 12:00</option>
+                <option value="afternoon">13:00 - 17:00</option>
+                <option value="evening">18:00 - 21:00</option>
+            </select>
+
+            <p style="margin-bottom: 20px; font-size: 14px;">Vui lòng chọn ngày giao sau đó chọn giờ giao.</p>
+        </div>
+
+        <!-- Address -->
+        <div>
+            <label for="address">Địa chỉ</label>
+            <input type="text" id="address" placeholder="">
+        </div>
+
+        <!-- Notes -->
+        <div>
+            <label for="notes">Ghi chú giao hàng</label>
+            <textarea id="notes" placeholder=""></textarea>
+        </div>
+
+        <!-- Gift Option -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="giftOption" @bind="isGift">
+            <label for="giftOption" style="text-transform: none; margin-bottom: 0;">Bạn muốn tặng bánh cho người khác?</label>
+        </div>
+
+        @if (isGift)
+        {
+        <!-- Recipient Information (only shown if gift option is checked) -->
+        <div id="recipientInfo">
+            <label for="recipientName">Người nhận</label>
+            <input type="text" id="recipientName" placeholder="">
+
+            <label for="recipientPhone">Số điện thoại người nhận</label>
+            <input type="tel" id="recipientPhone" placeholder="">
+        </div>
+            }
+
+        <!-- Order Summary -->
+        <div class="summary">
+            <div class="summary-row">
+                <span>Tổng tiền sản phẩm</span>
+                <span>350.000 đ</span>
+            </div>
+            <div class="summary-row">
+                <span>Phí vận chuyển</span>
+                <span>Tính phí vận chuyển</span>
+            </div>
+        </div>
+
+    </form>
+</div>
 
 @code {
-
+    private bool isGift = false; // Default unchecked
+    
 }

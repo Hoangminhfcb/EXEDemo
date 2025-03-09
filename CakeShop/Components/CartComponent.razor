@@ -28,13 +28,12 @@
     }
     else if (Step == "Checkout")
     {
-        <h3>Thông tin thanh toán</h3>
-        <input placeholder="Họ và tên" />
-        <input  placeholder="Địa chỉ giao hàng" />
+        
+        <Checkout></Checkout>
 
         <div class="btn-group">
-            <button @onclick="BackToCart">Quay lại</button>
-            <button >Xác nhận</button>
+            <button class="checkout-btn2" @onclick="BackToCart">&#8592;</button>
+            <button class="checkout-btn">Xác nhận</button>
         </div>
     }
 
