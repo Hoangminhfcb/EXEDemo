@@ -1,0 +1,61 @@
+﻿@using CakeShop.Components
+
+<div class="cart-container @(IsVisible ? "show" : "")">
+    <div class="cart-header">
+        <h2>Giỏ Hàng</h2>
+        <button class="close-btn" @onclick="CloseCart">✖</button>
+    </div>
+
+    @* <div class="cart-content">
+        <CartDetail></CartDetail>
+    </div>
+
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Tổng cộng:</span>
+            <span class="total-price">350.000₫</span>
+        </div>
+        <button class="checkout-btn">Tiếp tục</button>
+    </div> *@
+
+    @if (Step == "Cart")
+    {
+        <CartDetail></CartDetail>
+
+
+        <button class="checkout-btn" @onclick="GoToCheckout">Tiếp tục</button>
+        
+    }
+    else if (Step == "Checkout")
+    {
+        <h3>Thông tin thanh toán</h3>
+        <input placeholder="Họ và tên" />
+        <input  placeholder="Địa chỉ giao hàng" />
+
+        <div class="btn-group">
+            <button @onclick="BackToCart">Quay lại</button>
+            <button >Xác nhận</button>
+        </div>
+    }
+
+</div>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private string Step = "Cart";
+
+    private void CloseCart()
+    {
+        OnClose.InvokeAsync();
+    }
+    private void GoToCheckout()
+    {
+        Step = "Checkout";
+    }
+    private void BackToCart()
+    {
+        Step = "Cart";
+    }
+}

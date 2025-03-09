@@ -1,0 +1,97 @@
+﻿@using System.Timers
+@implements IDisposable
+
+<div class="hero-slider">
+    <div class="slider-container" style="transform: translateX(-@(currentSlide * 100)%)">
+        @foreach (var slide in slides)
+        {
+            <section class="hero-slide" style="background-image: url('@slide.ImageUrl');">
+                <div class="hero-content">
+                    <p class="hero-subtitle">@slide.Subtitle</p>
+                    <h1 class="hero-title">@slide.Title</h1>
+                    <button class="cta-button">Khám phá ngay</button>
+                </div>
+            </section>
+        }
+    </div>
+
+    <div class="pagination">
+        @for (int i = 0; i < slides.Count; i++)
+        {
+            var index = i;
+            <div class="pagination-dot @(currentSlide == index ? "active" : "")" @onclick="() => ShowSlide(index)"></div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<SlideData> slides = new List<SlideData>
+    {
+        new SlideData
+        {
+            ImageUrl = "../img/bg1.jpg",
+            Subtitle = "BST BÁNH ENTREMET DÀNH CHO",
+            Title = "Mọi dịp đặc biệt của bạn"
+        },
+        new SlideData
+        {
+            ImageUrl = "../img/bg2.png",
+            Subtitle = "THƯỞNG THỨC TRỌN VẸN",
+            Title = "Hương vị sáng tạo, đến từ trái cây tươi"
+        },
+        new SlideData
+        {
+            ImageUrl = "../img/bg3.jpg",
+            Subtitle = "CHẤT LƯỢNG HÀNG ĐẦU",
+            Title = "Nguyên liệu nhập khẩu cao cấp"
+        },
+        new SlideData
+        {
+            ImageUrl = "../img/bg4.jpg",
+            Subtitle = "THIẾT KẾ ĐỘC ĐÁO",
+            Title = "Tạo nên dấu ấn riêng cho bữa tiệc"
+        }
+    };
+    private int currentSlide = 0;
+    private Timer autoSlideTimer;
+
+    protected override void OnInitialized()
+    {
+        // Set up auto-slide timer
+        autoSlideTimer = new Timer(5000);
+        autoSlideTimer.Elapsed += AutoSlideTimerElapsed;
+        autoSlideTimer.AutoReset = true;
+        autoSlideTimer.Enabled = true;
+    }
+
+    private void AutoSlideTimerElapsed(object sender, ElapsedEventArgs e)
+    {
+        // Move to next slide
+        InvokeAsync(() =>
+        {
+            currentSlide = (currentSlide + 1) % slides.Count;
+            StateHasChanged();
+        });
+    }
+
+    private void ShowSlide(int index)
+    {
+        currentSlide = index;
+        // Reset the timer when manually changing slides
+        autoSlideTimer.Stop();
+        autoSlideTimer.Start();
+    }
+
+    public void Dispose()
+    {
+        // Clean up timer when component is disposed
+        autoSlideTimer?.Dispose();
+    }
+
+    private class SlideData
+    {
+        public string ImageUrl { get; set; }
+        public string Subtitle { get; set; }
+        public string Title { get; set; }
+    }
+}

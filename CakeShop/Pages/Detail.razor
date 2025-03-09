@@ -1,0 +1,61 @@
+﻿@page "/detail"
+@using CakeShop.Services
+@inject CartService CartService 
+
+@code {
+    private int quantity = 1;
+    private void IncreaseQuantity() => quantity++;
+    private void DecreaseQuantity() { if (quantity > 1) quantity--; }
+}
+
+<div class="container">
+    <!-- Product Detail -->
+    <div class="product-container">
+        <img src="../img/cake1.png" alt="Cake Image" class="product-image" />
+        <div class="product-info">
+            <h2 class="product-title">A Gentle Blend</h2>
+            <p class="product-category">BÁNH SINH NHẬT</p>
+            <div class="quantity-control">
+                <button class="quantity-btn" @onclick="DecreaseQuantity">-</button>
+                <span class="quantity">@quantity</span>
+                <button class="quantity-btn" @onclick="IncreaseQuantity">+</button>
+                <button class="add-to-cart" @onclick="AddCart">THÊM VÀO GIỎ • 350.000 ₫</button>
+            </div>
+            <h3 class="product-subtitle">CÀ PHÊ & CỐT DỪA</h3>
+            <p class="product-description">Lấy cảm hứng từ những hương vị quen thuộc, A Gentle Blend là sự kết hợp hài hòa giữa lớp kem mousse cà phê rang xay đậm đà, cùng lớp kem dừa thơm ngậy.</p>
+            <h4 class="flavor-title">CẢM GIÁC BÁNH</h4>
+            <div class="flavor-tags">
+                <span class="flavor">Đậm đà</span>
+                <span class="flavor">Thơm ngậy</span>
+                <span class="flavor">Ngọt vừa</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bakery Info -->
+    <div class="bakery-info">
+        <img src="../img/shop.jpg" alt="Bakery Logo" class="bakery-logo" />
+        <div class="bakery-details">
+            <h3 class="bakery-name">SweetCake Bakery</h3>
+            <p class="bakery-status">Online 2 Giờ Trước</p>
+            <div class="bakery-actions">
+                <button class="favorite-btn">❤️ Yêu Thích</button>
+                <button class="chat-btn">💬 Chat Ngay</button>
+                <button class="shop-btn">🏪 Xem Shop</button>
+            </div>
+        </div>
+        <div class="bakery-stats">
+            <p>Đánh Giá: <span class="highlight">2k</span></p>
+            <p>Sản Phẩm: <span class="highlight">177</span></p>
+            <p>Tỉ Lệ Phản Hồi: <span class="highlight">94%</span></p>
+            <p>Người Theo Dõi: <span class="highlight">869</span></p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void AddCart()
+    {
+        CartService.AddToCart("Bánh Kem Socola");
+    }
+}

@@ -1,0 +1,47 @@
+﻿@page "/"
+@using CakeShop.Components
+@using System.Globalization
+@inject NavigationManager _navigatioManager
+
+<Slider></Slider>
+
+
+<div class="product-list">
+    @foreach (var product in Products)
+    {
+        <div @onclick="Detail" class="product">
+            @if (product.IsOutOfStock)
+            {
+                <div class="product-label">TẠM HẾT HÀNG</div>
+            }
+            <img src="@product.ImageUrl" alt="@product.Name">
+            <h3>@product.Name</h3>
+            <p>@product.Description</p>
+            <p class="price">@product.Price.ToString("N0", CultureInfo.GetCultureInfo("vi-VN")) đ</p>
+        </div>
+    }
+</div>
+
+@code {
+    public class Product
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public string ImageUrl { get; set; }
+        public bool IsOutOfStock { get; set; }
+    }
+
+    private List<Product> Products = new List<Product>
+    {
+        new Product { Name = "GIFT OF JOY", Description = "Dứa, Xoài & Chanh leo", Price = 635000, ImageUrl = "../img/cake1.png", IsOutOfStock = true },
+        new Product { Name = "BOUNCE TO YOU", Description = "Trà Earlgrey, Cam & Sô-cô-la", Price = 650000, ImageUrl = "../img/cake2.png", IsOutOfStock = false },
+        new Product { Name = "CHOCOLATE DELIGHT", Description = "Sô-cô-la đen & hạnh nhân", Price = 700000, ImageUrl = "../img/cake3.png", IsOutOfStock = false },
+        new Product { Name = "STRAWBERRY DREAM", Description = "Dâu tây & Kem sữa", Price = 680000, ImageUrl = "../img/cake4.png", IsOutOfStock = true }
+    };
+
+    private void Detail()
+    {
+        _navigatioManager.NavigateTo("detail");
+    }
+}

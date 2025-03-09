@@ -1,0 +1,31 @@
+# Thư mục Visual Studio
+.vs/
+*.vsidx
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+
+# Thư mục của NuGet
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+
+# Logs
+*.log
+*.tlog
+
+# Tệp hệ thống
+.DS_Store
+Thumbs.db
+
+# Tệp tạm thời
+*.tmp
+*.bak
+*.swp
+*.sln.cache
