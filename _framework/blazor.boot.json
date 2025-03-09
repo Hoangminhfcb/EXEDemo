@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CakeShop",
   "resources": {
-    "hash": "sha256-HC9Wq8V6KYGFbY3aFoxDpyiMcvzDo3klFD9dss9dDTc=",
+    "hash": "sha256-f8bF3coZw5sbrL6xdZmkxJ4O2K1bmZRFTgOE3eWHjDY=",
     "jsModuleNative": {
       "dotnet.native.8.0.13.f1wj86lvfk.js": "sha256-xNQsYHtL1vcbrVTHDZAwJM4WovpoyjsrM2C6FQ8cW1w="
     },
@@ -17,7 +17,7 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "CakeShop.wasm": "sha256-hiwsfhMXc+aLpyVZtxgmMf+jLAE2TZpfPQabxlzCNNM=",
+      "CakeShop.wasm": "sha256-WMJu1V5MSPS/6yRwUZ5xENmYp3574InuRqfBXAKrQpY=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-4hh0lRYbxwiyCmSeA1jISsg0fvBQ+N9ogypKqtuPFHQ=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-+AeGjj5Wt7MXCBN/RE7iGr6POmyixEMA42E+6DHDetM=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-d6tN87QrJstiTMcLaUtZ6TWiNHa8A74Suuzx95thRrE=",
