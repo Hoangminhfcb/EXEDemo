@@ -1,0 +1,298 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "Z:\\Sofware Project\\Cake System\\BakeMarket\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|solutionrelative:bakemarket.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.api\\middlewares\\globalexceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|solutionrelative:bakemarket.api\\middlewares\\globalexceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|solutionrelative:bakemarket.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.api\\controllers\\bakeriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|solutionrelative:bakemarket.api\\controllers\\bakeriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.api\\controllers\\imagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|solutionrelative:bakemarket.api\\controllers\\imagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B722A88-7EA9-4C5D-BAE6-DC1334B56732}|BakeMarket.Domain\\BakeMarket.Domain.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B722A88-7EA9-4C5D-BAE6-DC1334B56732}|BakeMarket.Domain\\BakeMarket.Domain.csproj|solutionrelative:bakemarket.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\mappings\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\mappings\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E5DB9D2-AE8D-4029-86AA-7CE1E01CC3E3}|BakeMarket.Shared\\BakeMarket.Shared.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.shared\\dtos\\updateuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E5DB9D2-AE8D-4029-86AA-7CE1E01CC3E3}|BakeMarket.Shared\\BakeMarket.Shared.csproj|solutionrelative:bakemarket.shared\\dtos\\updateuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E5DB9D2-AE8D-4029-86AA-7CE1E01CC3E3}|BakeMarket.Shared\\BakeMarket.Shared.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.shared\\dtos\\updateuserresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E5DB9D2-AE8D-4029-86AA-7CE1E01CC3E3}|BakeMarket.Shared\\BakeMarket.Shared.csproj|solutionrelative:bakemarket.shared\\dtos\\updateuserresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{142752C5-09F4-4167-9272-36AD4178A149}|BakeMarket.API\\BakeMarket.API.csproj|solutionrelative:bakemarket.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\services\\nextcloudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\services\\nextcloudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\interfaces\\inextcloudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\interfaces\\inextcloudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\exceptions\\validationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\exceptions\\validationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\exceptions\\conflictexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\exceptions\\conflictexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|z:\\sofware project\\cake system\\bakemarket\\bakemarket.application\\interfaces\\ijwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9BEEFEC-0211-4E94-AC11-6CA1523EE44E}|BakeMarket.Application\\BakeMarket.Application.csproj|solutionrelative:bakemarket.application\\interfaces\\ijwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BakeriesController.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Controllers\\BakeriesController.cs",
+              "RelativeDocumentMoniker": "BakeMarket.API\\Controllers\\BakeriesController.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Controllers\\BakeriesController.cs",
+              "RelativeToolTip": "BakeMarket.API\\Controllers\\BakeriesController.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAgwDQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T01:03:40.504Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "BakeMarket.API\\Controllers\\UsersController.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "BakeMarket.API\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAQwD4AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:31:12.846Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Domain\\Entities\\User.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "BakeMarket.Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T07:30:38.938Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UpdateUserResponse.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Shared\\DTOs\\UpdateUserResponse.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Shared\\DTOs\\UpdateUserResponse.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Shared\\DTOs\\UpdateUserResponse.cs",
+              "RelativeToolTip": "BakeMarket.Shared\\DTOs\\UpdateUserResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T09:46:14.524Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Program.cs",
+              "RelativeDocumentMoniker": "BakeMarket.API\\Program.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Program.cs",
+              "RelativeToolTip": "BakeMarket.API\\Program.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAqwB0AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T08:27:02.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GlobalExceptionMiddleware.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "RelativeDocumentMoniker": "BakeMarket.API\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "RelativeToolTip": "BakeMarket.API\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAwD8AAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T07:02:53.459Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "JwtService.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Services\\JwtService.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Services\\JwtService.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Services\\JwtService.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Services\\JwtService.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwBwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:26:12.031Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UpdateUserRequest.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Shared\\DTOs\\UpdateUserRequest.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Shared\\DTOs\\UpdateUserRequest.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Shared\\DTOs\\UpdateUserRequest.cs",
+              "RelativeToolTip": "BakeMarket.Shared\\DTOs\\UpdateUserRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T09:46:18.068Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Mappings\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Mappings\\MappingProfile.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Mappings\\MappingProfile.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Mappings\\MappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T09:47:42.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ImagesController.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Controllers\\ImagesController.cs",
+              "RelativeDocumentMoniker": "BakeMarket.API\\Controllers\\ImagesController.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\Controllers\\ImagesController.cs",
+              "RelativeToolTip": "BakeMarket.API\\Controllers\\ImagesController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBIAAABmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T08:25:53.268Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\appsettings.json",
+              "RelativeDocumentMoniker": "BakeMarket.API\\appsettings.json",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.API\\appsettings.json",
+              "RelativeToolTip": "BakeMarket.API\\appsettings.json",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAQwBgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-13T08:26:19.665Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "NextcloudService.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Services\\NextcloudService.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Services\\NextcloudService.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Services\\NextcloudService.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Services\\NextcloudService.cs",
+              "ViewState": "AgIAAKoAAAAAAAAAAAAswLsAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T08:24:29.303Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "INextcloudService.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Interfaces\\INextcloudService.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Interfaces\\INextcloudService.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Interfaces\\INextcloudService.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Interfaces\\INextcloudService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T08:22:10.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ConflictException.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Exceptions\\ConflictException.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Exceptions\\ConflictException.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Exceptions\\ConflictException.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Exceptions\\ConflictException.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAnwBAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T07:53:10.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ValidationException.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Exceptions\\ValidationException.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Exceptions\\ValidationException.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Exceptions\\ValidationException.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Exceptions\\ValidationException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T07:01:15.347Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Services\\UserService.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Services\\UserService.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Services\\UserService.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAcwDoAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T05:37:12.079Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IJwtService.cs",
+              "DocumentMoniker": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Interfaces\\IJwtService.cs",
+              "RelativeDocumentMoniker": "BakeMarket.Application\\Interfaces\\IJwtService.cs",
+              "ToolTip": "Z:\\Sofware Project\\Cake System\\BakeMarket\\BakeMarket.Application\\Interfaces\\IJwtService.cs",
+              "RelativeToolTip": "BakeMarket.Application\\Interfaces\\IJwtService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:25:39.905Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

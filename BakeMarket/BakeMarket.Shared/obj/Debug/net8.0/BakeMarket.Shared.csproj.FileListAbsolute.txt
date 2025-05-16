@@ -1,0 +1,15 @@
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\bin\Debug\net8.0\BakeMarket.Shared.deps.json
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\bin\Debug\net8.0\BakeMarket.Shared.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\bin\Debug\net8.0\BakeMarket.Shared.pdb
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\bin\Debug\net8.0\BakeMarket.Domain.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\bin\Debug\net8.0\BakeMarket.Domain.pdb
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.csproj.AssemblyReference.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.GeneratedMSBuildEditorConfig.editorconfig
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.AssemblyInfoInputs.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.AssemblyInfo.cs
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.csproj.CoreCompileInputs.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMark.3A362175.Up2Date
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\refint\BakeMarket.Shared.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\BakeMarket.Shared.pdb
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Shared\obj\Debug\net8.0\ref\BakeMarket.Shared.dll

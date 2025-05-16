@@ -1,0 +1,6 @@
+@BakeMarket.API_HostAddress = http://localhost:5005
+
+GET {{BakeMarket.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
