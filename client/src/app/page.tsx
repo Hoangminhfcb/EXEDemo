@@ -1,5 +1,8 @@
-import Image from "next/image";
-import { FaSearch, FaHeart, FaMapMarkerAlt } from "react-icons/fa";
+"use client"
+
+import Image from "next/image"
+import Link from "next/link"
+import { FaSearch, FaHeart, FaMapMarkerAlt } from "react-icons/fa"
 
 export default function Home() {
   // Featured products data
@@ -48,7 +51,7 @@ export default function Home() {
       image: "/images/cake6.jpg",
       discount: true,
     },
-  ];
+  ]
 
   return (
     <>
@@ -58,12 +61,8 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Đặt bánh ngọt, giao hàng từ 20
-          </h1>
-          <p className="text-white text-lg mb-8">
-            Có 5000+ Tiệm Bánh Ở TP. HCM Từ 00:00 - 23:59
-          </p>
+          <h1 className="text-4xl font-bold text-white mb-4">Đặt bánh ngọt, giao hàng từ 20</h1>
+          <p className="text-white text-lg mb-8">Có 5000+ Tiệm Bánh Ở TP. HCM Từ 00:00 - 23:59</p>
 
           <div className="w-full max-w-2xl bg-white rounded-lg overflow-hidden flex">
             <input
@@ -116,53 +115,54 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
-            >
-              <div className="relative">
-                <Image
-                  src={product.image}
-                  width={400}
-                  height={300}
-                  alt={product.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute top-2 right-2">
-                  <button
-                    className={`p-2 rounded-full ${
-                      product.favorite
-                        ? "bg-pink-600 text-white"
-                        : "bg-white text-gray-600"
-                    }`}
-                  >
-                    <FaHeart />
-                  </button>
-                </div>
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-                <p className="text-gray-600 text-sm flex items-center mb-3">
-                  <FaMapMarkerAlt className="mr-1" /> {product.address}
-                </p>
-                {product.discount && (
-                  <p className="text-pink-600 flex items-center text-sm">
-                    <svg
-                      className="w-4 h-4 mr-1"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
+            <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
+              <Link href={`/productDetail/${product.id}`} className="block">
+                <div className="relative">
+                  <Image
+                    src={product.image || "/placeholder.svg"}
+                    width={400}
+                    height={300}
+                    alt={product.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-2 right-2">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        // Add favorite functionality here
+                      }}
+                      className={`p-2 rounded-full ${
+                        product.favorite ? "bg-pink-600 text-white" : "bg-white text-gray-600"
+                      }`}
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                    Giảm giá đặc biệt
+                      <FaHeart />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+                  <p className="text-gray-600 text-sm flex items-center mb-3">
+                    <FaMapMarkerAlt className="mr-1" /> {product.address}
                   </p>
-                )}
-              </div>
+                  {product.discount && (
+                    <p className="text-pink-600 flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                      Giảm giá đặc biệt
+                    </p>
+                  )}
+                </div>
+              </Link>
             </div>
           ))}
         </div>
@@ -170,5 +170,5 @@ export default function Home() {
 
       {/* Footer */}
     </>
-  );
+  )
 }
