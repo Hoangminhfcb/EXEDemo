@@ -117,13 +117,13 @@ const Header = () => {
             href="/about"
             className="text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 transition-colors duration-300"
           >
-            Về LAFUONG
+            Về chúng tôi
           </Link>
         </nav>
 
         {/* Logo - centered on desktop */}
         <div className="flex-1 text-center text-2xl font-bold">
-          <Link href="/">LAFUONG</Link>
+          <Link href="/">PEUDAMOR</Link>
         </div>
 
         {/* Right nav - desktop only */}
