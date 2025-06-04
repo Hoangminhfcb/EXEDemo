@@ -1,3 +1,5 @@
+//page cho customer xem chi tiet cua shop
+
 "use client"
 
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react"
