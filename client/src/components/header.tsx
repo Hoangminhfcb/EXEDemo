@@ -6,6 +6,7 @@ import { ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import ButtonLogout from "./buttonLogout";
 import AuthLinks from "./auth/authLinks";
 
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuAnimationClass, setMenuAnimationClass] = useState("");
@@ -130,7 +131,7 @@ const Header = () => {
         <AuthLinks />
         {/* Cart icon */}
         <Link
-          href="/cart"
+          href="/cart/cart-sidebar"
           className="text-gray-800 ml-4 transition-transform duration-300 hover:scale-110"
         >
           <ShoppingCart size={20} />
