@@ -18,8 +18,16 @@ builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<BakeMarketDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+
 builder.Services.AddDbContext<BakeMarketDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = jwtSettings["Key"] ?? throw new InvalidOperationException("JWT Key is missing in configuration");
@@ -88,7 +96,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", builder =>
     {
         builder
-            .WithOrigins("http://localhost:3000")
+            .WithOrigins(["http://localhost:3000", "https://exe.zanis.id.vn"])
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -112,18 +120,23 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBakeryRepository, BakeryRepository>();
-
+builder.Services.AddScoped<ICakeRepository, CakeRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBakeryService, BakeryService>();
-
+builder.Services.AddScoped<ICakeService, CakeService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 
 // Seed data before running the app
 using (var scope = app.Services.CreateScope())
 {
+    var db = scope.ServiceProvider.GetRequiredService<BakeMarketDbContext>();
+    db.Database.Migrate();
+
     var services = scope.ServiceProvider;
     try
     {

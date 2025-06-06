@@ -9,6 +9,6 @@ namespace BakeMarket.Application.Interfaces
 {
     public interface IBakeryService : IGenericService<Bakery>
     {
-        // Add any additional methods specific to Bakery service here
+        Task<Bakery?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     }
 }

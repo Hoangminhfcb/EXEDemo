@@ -96,6 +96,7 @@ Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\System
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\System.Security.Permissions.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\System.Windows.Extensions.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\WebDav.Client.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\af\Humanizer.resources.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\ar\Humanizer.resources.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\az\Humanizer.resources.dll
@@ -261,6 +262,7 @@ Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMa
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMarket.API.csproj.CoreCompileInputs.cache
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMarket.API.MvcApplicationPartsAssemblyInfo.cs
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMarket.API.MvcApplicationPartsAssemblyInfo.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMarket.API.sourcelink.json
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\scopedcss\bundle\BakeMarket.API.styles.css
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\staticwebassets.build.json
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\staticwebassets.development.json
@@ -278,4 +280,3 @@ Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMa
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\BakeMarket.API.genruntimeconfig.cache
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\ref\BakeMarket.API.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.API\bin\Debug\net8.0\WebDav.Client.dll

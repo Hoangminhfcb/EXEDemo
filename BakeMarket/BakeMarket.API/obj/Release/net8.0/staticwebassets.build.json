@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "rOhDT3jOYP7Kzt7tLwDTwRkyKZFWhBAJnkDRl+LBRfU=",
+  "Source": "BakeMarket.API",
+  "BasePath": "_content/BakeMarket.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

@@ -6,6 +6,7 @@ Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\Bak
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\BakeMarket.Domain.AssemblyInfoInputs.cache
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\BakeMarket.Domain.AssemblyInfo.cs
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\BakeMarket.Domain.csproj.CoreCompileInputs.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\BakeMarket.Domain.sourcelink.json
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\BakeMarket.Domain.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\refint\BakeMarket.Domain.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Debug\net8.0\BakeMarket.Domain.pdb

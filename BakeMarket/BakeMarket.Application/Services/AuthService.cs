@@ -111,9 +111,7 @@ namespace BakeMarket.Application.Services
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
-                Email = user.Email,
-                UserId = user.Id,
-                FullName = user.FullName
+                Roles = roles.ToArray(),
             };
         }
     }

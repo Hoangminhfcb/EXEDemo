@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakeMarket.Application.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using WebDav;
 
 namespace BakeMarket.Application.Services
 {
-    public class NextcloudService
+    public class NextcloudService : INextcloudService
     {
         private readonly WebDavClient _client;
         private readonly string _baseUrl;
@@ -29,7 +30,7 @@ namespace BakeMarket.Application.Services
         }
 
         // Phương thức đảm bảo thư mục project tồn tại
-        private async Task EnsureProjectFolderExistsAsync()
+        public async Task EnsureProjectFolderExistsAsync()
         {
             try
             {
@@ -96,7 +97,7 @@ namespace BakeMarket.Application.Services
         }
 
         // Đảm bảo thư mục tồn tại
-        private async Task EnsureFolderExistsAsync(string folderPath)
+        public async Task EnsureFolderExistsAsync(string folderPath)
         {
             try
             {

@@ -1,0 +1,13 @@
+Z:\app\build\BakeMarket.Domain.deps.json
+Z:\app\build\BakeMarket.Domain.dll
+Z:\app\build\BakeMarket.Domain.pdb
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.csproj.AssemblyReference.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.GeneratedMSBuildEditorConfig.editorconfig
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.AssemblyInfoInputs.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.AssemblyInfo.cs
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.csproj.CoreCompileInputs.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.sourcelink.json
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\refint\BakeMarket.Domain.dll
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\BakeMarket.Domain.pdb
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Domain\obj\Release\net8.0\ref\BakeMarket.Domain.dll

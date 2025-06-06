@@ -11,5 +11,6 @@ namespace BakeMarket.Application.Interfaces
     {
         string GenerateAccessToken(List<Claim> claims);
         string GenerateRefreshToken(List<Claim> claims);
+        bool VerifyToken(string token);
     }
 }

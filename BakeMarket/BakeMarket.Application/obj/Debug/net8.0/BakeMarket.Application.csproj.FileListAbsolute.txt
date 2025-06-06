@@ -10,6 +10,7 @@ Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\BakeMarket.Application.AssemblyInfoInputs.cache
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\BakeMarket.Application.AssemblyInfo.cs
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\BakeMarket.Application.csproj.CoreCompileInputs.cache
+Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\BakeMarket.Application.sourcelink.json
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\BakeMark.31CB096D.Up2Date
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\BakeMarket.Application.dll
 Z:\Sofware Project\Cake System\BakeMarket\BakeMarket.Application\obj\Debug\net8.0\refint\BakeMarket.Application.dll

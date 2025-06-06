@@ -42,6 +42,35 @@ namespace BakeMarket.Application.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task AddRole(Guid userId, string roleName, CancellationToken cancellationToken = default)
+        {
+            var user = await _repository.GetByIdAsync(userId, cancellationToken);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains(roleName))
+            {
+                throw new ConflictException(new Dictionary<string, string[]>
+        {
+            { "role", new[] { $"User already has '{roleName}' role" } }
+        });
+            }
+
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                throw new Exception();
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (!result.Succeeded)
+            {
+                throw new Exception($"Failed to assign role '{roleName}' to user.");
+            }
+
+            await _roleManager.AddClaimAsync(role, new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
+        }
+
         public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request, CancellationToken cancellationToken = default)
         {
             var errors = new Dictionary<string, string[]>();

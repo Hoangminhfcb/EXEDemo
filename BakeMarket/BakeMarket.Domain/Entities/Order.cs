@@ -6,8 +6,8 @@ namespace BakeMarket.Domain.Entities
         public Guid Id { get; set; }
         public DateTime OrderDate { get; set; }
         public OrderStatus Status { get; set; }
-        public string DeliveryAddress { get; set; } = string.Empty;
-        public string ContactPhone { get; set; } = string.Empty;
+        public string DeliveryAddress { get; set; }
+        public string ContactPhone { get; set; }
         public Guid CustomerId { get; set; }
         public User? Customer { get; set; }
         public Guid BakeryId { get; set; }

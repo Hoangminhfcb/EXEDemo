@@ -26,7 +26,7 @@ namespace BakeMarket.Application.Services
                     audience: _configuration["Jwt:Audience"],
                     claims: claims,
                     notBefore: DateTime.UtcNow,
-                    expires: DateTime.UtcNow.AddSeconds(10),
+                    expires: DateTime.UtcNow.AddMinutes(100),
                     signingCredentials: credentials
                 );
 
@@ -49,5 +49,36 @@ namespace BakeMarket.Application.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public bool VerifyToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration["Jwt:Issuer"],
+
+                    ValidateAudience = true,
+                    ValidAudience = _configuration["Jwt:Audience"],
+
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }

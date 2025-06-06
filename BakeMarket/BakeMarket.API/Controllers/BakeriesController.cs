@@ -1,73 +1,76 @@
-﻿using BakeMarket.Application.Interfaces;
+﻿using AutoMapper;
+using BakeMarket.Application.Interfaces;
 using BakeMarket.Domain.Entities;
 using BakeMarket.Shared.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BakeMarket.API.Controllers
 {
-    [Authorize(Roles = "BakeryOwner")]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BakeriesController : ControllerBase
     {
         private readonly IBakeryService _bakeryService;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public BakeriesController(IBakeryService bakeryService)
+        public BakeriesController(IBakeryService bakeryService,
+            IUserService userService,
+            IMapper mapper)
         {
             _bakeryService = bakeryService;
+            _userService = userService;
+            _mapper = mapper;
         }
 
+        //[Authorize(Roles = "Admin")]
         // GET: api/Bakeries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetBakeries()
+        public async Task<ActionResult<IEnumerable<BakeryDTO>>> GetBakeries()
         {
             var bakeries = await _bakeryService.GetAllAsync();
 
-            return Ok(bakeries);
+            return Ok(_mapper.Map<IEnumerable<BakeryDTO>>(bakeries));
         }
 
+        //[Authorize(Roles = "BakeryOwner")]
         // GET: api/Bakeries/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Bakery>> GetBakery(Guid id)
+        [HttpGet("MyBakery")]
+        public async Task<ActionResult<Bakery>> GetBakery()
         {
-            var bakery = await _bakeryService.GetByIdAsync(id);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var bakery = await _bakeryService.GetByUserIdAsync(Guid.Parse(userId));
 
             if (bakery == null)
             {
                 return NotFound();
             }
 
-            return bakery;
+            return Ok(_mapper.Map<BakeryDTO>(bakery));
         }
 
         // POST: api/Bakeries
-        //[HttpPost]
-        //public async Task<IActionResult> CreateBakery([FromBody] CreateBakeryRequest request)
-        //{
-        //    if (request == null || !ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> CreateBakery([FromBody] CreateBakeryRequest request)
+        {
+            if (request == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    var newUser = await _userService.CreateUserAsync(request);
+            var newBakery = await _bakeryService.AddAsync(_mapper.Map<Bakery>(request));
+            await _userService.AddRole(request.OwnerId, "BakeryOwner");
 
-        //    return Ok(newUser);
-        //}
-
-        //// PUT: api/Bakeries
-        //[HttpPut]
-        //public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
-        //{
-        //    if (request == null || !ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var updatedUser = await _userService.UpdateUserAsync(request);
-
-        //    return Ok(updatedUser);
-        //}
+            return Ok(_mapper.Map<BakeryDTO>(newBakery));
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace BakeMarket.Infrastructure.Data
         public DbSet<BakeryImage> BakeryImages { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

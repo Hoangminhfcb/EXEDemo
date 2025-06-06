@@ -12,5 +12,6 @@ namespace BakeMarket.Application.Interfaces
     {
         Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request, CancellationToken cancellationToken = default);
         Task<UpdateUserResponse> UpdateUserAsync(UpdateUserRequest request, CancellationToken cancellationToken = default);
+        Task AddRole(Guid userId, string Role, CancellationToken cancellationToken = default);
     }
 }

@@ -32,6 +32,21 @@ namespace BakeMarket.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CoverImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,8 +95,8 @@ namespace BakeMarket.Infrastructure.Migrations
                     b.Property<Guid>("BakeryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Category")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -102,6 +117,8 @@ namespace BakeMarket.Infrastructure.Migrations
 
                     b.HasIndex("BakeryId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Cakes");
                 });
 
@@ -111,7 +128,7 @@ namespace BakeMarket.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CakeId")
+                    b.Property<Guid?>("CakeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
@@ -123,6 +140,24 @@ namespace BakeMarket.Infrastructure.Migrations
                     b.HasIndex("CakeId");
 
                     b.ToTable("CakeImages");
+                });
+
+            modelBuilder.Entity("BakeMarket.Domain.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("BakeMarket.Domain.Entities.Order", b =>
@@ -192,6 +227,37 @@ namespace BakeMarket.Infrastructure.Migrations
                     b.ToTable("OrderItems");
                 });
 
+            modelBuilder.Entity("BakeMarket.Domain.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BakeryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BakeryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("BakeMarket.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -235,6 +301,10 @@ namespace BakeMarket.Infrastructure.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -435,7 +505,13 @@ namespace BakeMarket.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BakeMarket.Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
                     b.Navigation("Bakery");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("BakeMarket.Domain.Entities.CakeImage", b =>
@@ -443,8 +519,7 @@ namespace BakeMarket.Infrastructure.Migrations
                     b.HasOne("BakeMarket.Domain.Entities.Cake", "Cake")
                         .WithMany("Images")
                         .HasForeignKey("CakeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Cake");
                 });
@@ -492,6 +567,25 @@ namespace BakeMarket.Infrastructure.Migrations
                     b.Navigation("Cake");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("BakeMarket.Domain.Entities.Review", b =>
+                {
+                    b.HasOne("BakeMarket.Domain.Entities.Bakery", "Bakery")
+                        .WithMany("reviews")
+                        .HasForeignKey("BakeryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BakeMarket.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bakery");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -552,6 +646,8 @@ namespace BakeMarket.Infrastructure.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("reviews");
                 });
 
             modelBuilder.Entity("BakeMarket.Domain.Entities.Cake", b =>

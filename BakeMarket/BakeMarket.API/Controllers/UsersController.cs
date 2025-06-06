@@ -15,7 +15,7 @@ using AutoMapper;
 
 namespace BakeMarket.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -51,6 +51,19 @@ namespace BakeMarket.API.Controllers
             }
 
             return user;
+        }
+
+        [HttpGet("by-phone/{phone}")]
+        public async Task<ActionResult<User>> GetUserByPhone(string phone)
+        {
+            var user = await _userService.FindByConditionAsync(u => u.PhoneNumber == phone);
+
+            if (!user.Any())
+            {
+                return NotFound();
+            }
+
+            return user.FirstOrDefault();
         }
 
         // GET: api/Users/me
