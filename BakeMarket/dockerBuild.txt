@@ -1,2 +1,0 @@
-docker build -f BakeMarket.API/Dockerfile -t bakemarket-api .
-
