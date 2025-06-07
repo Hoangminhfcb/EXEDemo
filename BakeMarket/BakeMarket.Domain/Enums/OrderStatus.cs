@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace BakeMarket.Domain.Enums
 {
     public enum OrderStatus
     {
-        Pending,
-        Confirmed,
-        Preparing,
-        ReadyForDelivery,
-        OutForDelivery,
-        Delivered,
-        Cancelled
+        Pending = 0,
+        Confirmed = 1,
+        InProgress = 2,
+        Ready = 3,
+        OutForDelivery = 4,
+        Delivered = 5,
+        Cancelled = 6,
+        Refunded = 7
     }
 }

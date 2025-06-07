@@ -1,13 +1,19 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BakeMarket.Domain.Entities
 {
-    public class CakeImage
+    public class CakeImage : BaseEntity
     {
-        public Guid Id { get; set; }
-        public string ImageUrl { get; set; }
-        public Guid? CakeId { get; set; }
-        [JsonIgnore]
+        [Required, MaxLength(255)]
+        public string ImageUrl { get; set; } = string.Empty;
+
+        [MaxLength(100)]
+        public string? Caption { get; set; }
+
+        public int DisplayOrder { get; set; } = 0;
+
+        [Required]
+        public Guid CakeId { get; set; }
         public Cake? Cake { get; set; }
     }
 }

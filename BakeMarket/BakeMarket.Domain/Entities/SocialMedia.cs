@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BakeMarket.Domain.Entities
 {
-    public class SocialMedia
+    public class SocialMedia : BaseEntity
     {
-        public Guid Id { get; set; }
-        public string Platform { get; set; }
-        public string Url { get; set; }
+        [Required, MaxLength(50)]
+        public string Platform { get; set; } = string.Empty;
+
+        [Required, MaxLength(255)]
+        public string Url { get; set; } = string.Empty;
+
+        [Required]
+        public Guid UserId { get; set; }
         public User? User { get; set; }
     }
 }

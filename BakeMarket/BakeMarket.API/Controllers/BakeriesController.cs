@@ -40,7 +40,7 @@ namespace BakeMarket.API.Controllers
         //[Authorize(Roles = "BakeryOwner")]
         // GET: api/Bakeries/5
         [HttpGet("MyBakery")]
-        public async Task<ActionResult<Bakery>> GetBakery()
+        public async Task<IActionResult> GetBakery()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)

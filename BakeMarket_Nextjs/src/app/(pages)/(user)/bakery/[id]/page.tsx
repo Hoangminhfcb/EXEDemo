@@ -29,8 +29,8 @@ import { set } from "lodash";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
-export default async function BakeryPage({ params }: PageProps) {
-  const bakeryId = (await params).id;
+export default function BakeryPage({ params }: PageProps) {
+  const bakeryId = use(params).id;
 
   const [bakery, setBakery] = useState<any>(null);
   const [products, setProducts] = useState<any[]>([]);
@@ -39,23 +39,23 @@ export default async function BakeryPage({ params }: PageProps) {
   const [isOwner, setIsOwner] = useState(false); // In real app, check if current user owns this bakery
 
   useEffect(() => {
-    const fetchBakery = async () => {
-      try {
-        const myBakery = await getBakeryByUserSignIn();
-        console.log("My Bakery Data:", myBakery, JSON.stringify(myBakery));
+    // const fetchBakery = async () => {
+    //   try {
+    //     const myBakery = await getBakeryByUserSignIn();
+    //     console.log("My Bakery Data:", myBakery, JSON.stringify(myBakery));
 
-        if (myBakery && myBakery.id) {
-          // setBakery(myBakery);
-          // setIsOwner(true); // Nếu đúng user đăng nhập
-        } else {
-          console.warn("Bakery not found or empty response.");
-        }
-      } catch (error) {
-        console.error("Error fetching bakery:", error);
-      }
-    };
+    //     if (myBakery && myBakery.id) {
+    //       // setBakery(myBakery);
+    //       // setIsOwner(true); // Nếu đúng user đăng nhập
+    //     } else {
+    //       console.warn("Bakery not found or empty response.");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching bakery:", error);
+    //   }
+    // };
 
-    fetchBakery();
+    // fetchBakery();
     // Mock data - in real app, fetch from API
     const mockBakery = {
       id: bakeryId,

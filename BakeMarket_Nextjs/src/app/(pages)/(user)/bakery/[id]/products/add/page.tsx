@@ -1,28 +1,17 @@
 "use client";
 
-import type React from "react";
-
-import { useState, useRef } from "react";
-import { use } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import {
-  FaArrowLeft,
-  FaSave,
-  FaImage,
-  FaPlus,
-  FaTrash,
-  FaCheck,
-} from "react-icons/fa";
+import { FaArrowLeft, FaCheck } from "react-icons/fa";
+import { getCategories } from "@/services/categoryService";
+import { Category } from "@/types/bakery";
 
-interface PageProps {
-  params: Promise<{ id: string }>;
+interface Props {
+  bakeryId: string;
 }
 
-export default async function AddProductPage({ params }: PageProps) {
-  const bakeryId = (await params).id;
-
+export default function AddProductPageClient({ bakeryId }: Props) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,38 +20,23 @@ export default async function AddProductPage({ params }: PageProps) {
     category: "",
     description: "",
     price: "",
-    discountPrice: "",
-    hasDiscount: false,
-    featured: false,
-    ingredients: "",
-    allergens: "",
-    preparationTime: "",
-    customizable: false,
-    availableForDelivery: true,
-    availableForPickup: true,
-    minOrderQuantity: "1",
-    stock: "unlimited", // unlimited or limited
+    stock: "unlimited",
     stockQuantity: "",
   });
 
+  const [categories, setCategories] = useState<Category[]>([]);
   const [productImages, setProductImages] = useState<string[]>([]);
   const [errors, setErrors] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Predefined categories
-  const categories = [
-    "Bánh Sinh Nhật",
-    "Bánh Cưới",
-    "Bánh Kem",
-    "Cupcake",
-    "Cookies",
-    "Bánh Mì Ngọt",
-    "Bánh Su Kem",
-    "Bánh Crepe",
-    "Bánh Flan",
-    "Khác",
-  ];
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getCategories();
+      setCategories(res.data || []);
+    };
+    fetchCategories();
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -78,7 +52,6 @@ export default async function AddProductPage({ params }: PageProps) {
       setFormData({ ...formData, [name]: value });
     }
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
     }
@@ -88,20 +61,16 @@ export default async function AddProductPage({ params }: PageProps) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    // In a real app, you would upload these files to a server
-    // Here we'll just create object URLs for preview
     const newImages = Array.from(files).map((file) =>
       URL.createObjectURL(file)
     );
     setProductImages([...productImages, ...newImages]);
 
-    // Clear the input so the same file can be selected again
     e.target.value = "";
   };
 
   const handleRemoveImage = (index: number) => {
     const newImages = [...productImages];
-    // Revoke the object URL to avoid memory leaks
     URL.revokeObjectURL(newImages[index]);
     newImages.splice(index, 1);
     setProductImages(newImages);
@@ -117,17 +86,6 @@ export default async function AddProductPage({ params }: PageProps) {
     if (!formData.price.trim()) newErrors.price = "Giá sản phẩm là bắt buộc";
     else if (isNaN(Number(formData.price)) || Number(formData.price) <= 0)
       newErrors.price = "Giá sản phẩm phải là số dương";
-
-    if (formData.hasDiscount && formData.discountPrice.trim() === "")
-      newErrors.discountPrice = "Giá khuyến mãi là bắt buộc khi có giảm giá";
-    else if (
-      formData.hasDiscount &&
-      (isNaN(Number(formData.discountPrice)) ||
-        Number(formData.discountPrice) <= 0 ||
-        Number(formData.discountPrice) >= Number(formData.price))
-    )
-      newErrors.discountPrice =
-        "Giá khuyến mãi phải là số dương và nhỏ hơn giá gốc";
 
     if (productImages.length === 0)
       newErrors.images = "Cần ít nhất một hình ảnh sản phẩm";
@@ -149,7 +107,6 @@ export default async function AddProductPage({ params }: PageProps) {
     e.preventDefault();
 
     if (!validateForm()) {
-      // Scroll to the first error
       const firstError = document.querySelector(".text-red-600");
       if (firstError) {
         firstError.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -158,18 +115,11 @@ export default async function AddProductPage({ params }: PageProps) {
     }
 
     setIsLoading(true);
-
     try {
-      // In a real app, you would upload images and send data to API
       console.log("Adding product:", { ...formData, images: productImages });
-
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Show success message
       setShowSuccess(true);
 
-      // Reset form after 2 seconds and redirect
       setTimeout(() => {
         router.push(`/bakery/${bakeryId}`);
       }, 2000);
@@ -184,17 +134,8 @@ export default async function AddProductPage({ params }: PageProps) {
     }
   };
 
-  const formatPrice = (price: string) => {
-    if (!price) return "";
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(Number(price));
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Success Notification */}
       {showSuccess && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
@@ -213,7 +154,6 @@ export default async function AddProductPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
@@ -281,9 +221,9 @@ export default async function AddProductPage({ params }: PageProps) {
                   }`}
                 >
                   <option value="">-- Chọn danh mục --</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
+                  {categories.map((category: Category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
                     </option>
                   ))}
                 </select>
@@ -350,82 +290,6 @@ export default async function AddProductPage({ params }: PageProps) {
                   </p>
                 )}
               </div>
-
-              <div className="flex flex-col">
-                <div className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    id="hasDiscount"
-                    name="hasDiscount"
-                    checked={formData.hasDiscount}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                  />
-                  <label
-                    htmlFor="hasDiscount"
-                    className="ml-2 block text-sm text-gray-700"
-                  >
-                    Có giảm giá
-                  </label>
-                </div>
-
-                {formData.hasDiscount && (
-                  <div>
-                    <label
-                      htmlFor="discountPrice"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Giá khuyến mãi (VNĐ) *
-                    </label>
-                    <input
-                      type="text"
-                      id="discountPrice"
-                      name="discountPrice"
-                      value={formData.discountPrice}
-                      onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                        errors.discountPrice
-                          ? "border-red-500 focus:ring-red-200"
-                          : "border-gray-300 focus:ring-pink-200"
-                      }`}
-                      placeholder="VD: 299000"
-                    />
-                    {errors.discountPrice && (
-                      <p className="mt-1 text-sm text-red-600">
-                        {errors.discountPrice}
-                      </p>
-                    )}
-                    {formData.discountPrice && !errors.discountPrice && (
-                      <p className="mt-1 text-sm text-gray-600">
-                        = {formatPrice(formData.discountPrice)}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <div className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  id="featured"
-                  name="featured"
-                  checked={formData.featured}
-                  onChange={handleInputChange}
-                  className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="featured"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Đánh dấu là sản phẩm nổi bật
-                </label>
-              </div>
-              <p className="text-xs text-gray-500">
-                Sản phẩm nổi bật sẽ được hiển thị ở vị trí đặc biệt trên trang
-                của bạn
-              </p>
             </div>
           </div>
 
@@ -493,142 +357,6 @@ export default async function AddProductPage({ params }: PageProps) {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Additional Details */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-6">Thông tin chi tiết</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="ingredients"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Nguyên liệu
-                </label>
-                <textarea
-                  id="ingredients"
-                  name="ingredients"
-                  rows={3}
-                  value={formData.ingredients}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
-                  placeholder="VD: Bột mì, đường, trứng, sữa tươi..."
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="allergens"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Thông tin dị ứng
-                </label>
-                <textarea
-                  id="allergens"
-                  name="allergens"
-                  rows={3}
-                  value={formData.allergens}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
-                  placeholder="VD: Có chứa gluten, sữa, trứng..."
-                />
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="preparationTime"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Thời gian chuẩn bị
-                </label>
-                <input
-                  type="text"
-                  id="preparationTime"
-                  name="preparationTime"
-                  value={formData.preparationTime}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
-                  placeholder="VD: 2 giờ, 1 ngày..."
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="minOrderQuantity"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Số lượng đặt tối thiểu
-                </label>
-                <input
-                  type="number"
-                  id="minOrderQuantity"
-                  name="minOrderQuantity"
-                  value={formData.minOrderQuantity}
-                  onChange={handleInputChange}
-                  min="1"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
-                />
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <div className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  id="customizable"
-                  name="customizable"
-                  checked={formData.customizable}
-                  onChange={handleInputChange}
-                  className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="customizable"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Sản phẩm có thể tùy chỉnh theo yêu cầu
-                </label>
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="availableForDelivery"
-                  name="availableForDelivery"
-                  checked={formData.availableForDelivery}
-                  onChange={handleInputChange}
-                  className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="availableForDelivery"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Có giao hàng
-                </label>
-              </div>
-
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="availableForPickup"
-                  name="availableForPickup"
-                  checked={formData.availableForPickup}
-                  onChange={handleInputChange}
-                  className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="availableForPickup"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Có lấy tại cửa hàng
-                </label>
-              </div>
-            </div>
           </div>
 
           {/* Inventory Management */}

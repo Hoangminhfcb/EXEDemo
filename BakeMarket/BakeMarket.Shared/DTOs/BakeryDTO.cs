@@ -17,6 +17,11 @@ namespace BakeMarket.Shared.DTOs
         public string CoverImageUrl { get; set; }
         public string LogoImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsVerified { get; set; }
+        public string BusinessHours { get; set; }
+        public double AverageRating { get; set; }
+        public int TotalReviews { get; set; }
         public UserDTO? Owner { get; set; }
         public ICollection<BakeryImage>? Images { get; set; }
     }
