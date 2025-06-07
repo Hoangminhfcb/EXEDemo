@@ -27,7 +27,7 @@ namespace BakeMarket.Infrastructure.Repositories
                 .Include(c => c.Cakes)
                 .Include(b => b.Images)
                 .Include(o => o.Orders)
-                .Include(r => r.Reviews)
+                .Include(r => r.BakeryReviews)
                 .ToListAsync(cancellationToken);
         }
 
@@ -38,7 +38,7 @@ namespace BakeMarket.Infrastructure.Repositories
                 .Include(c => c.Cakes)
                 .Include(b => b.Images)
                 .Include(o => o.Orders)
-                .Include(r => r.Reviews)
+                .Include(r => r.BakeryReviews)
                 .FirstOrDefaultAsync(b => b.OwnerId == userId, cancellationToken);
         }
     }
