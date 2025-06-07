@@ -10,6 +10,7 @@ obj/
 
 # VS Code settings folder
 .vscode/
+.vs/
 
 # Rider settings folder
 .idea/
