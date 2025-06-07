@@ -3,7 +3,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { FaArrowLeft, FaCheck } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaCheck,
+  FaImage,
+  FaPlus,
+  FaSave,
+  FaTrash,
+} from "react-icons/fa";
 import { getCategories } from "@/services/categoryService";
 import { Category } from "@/types/bakery";
 
@@ -132,6 +139,14 @@ export default function AddProductPageClient({ bakeryId }: Props) {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const formatPrice = (price: string) => {
+    if (!price) return "";
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(Number(price));
   };
 
   return (
@@ -328,10 +343,9 @@ export default function AddProductPageClient({ bakeryId }: Props) {
                 {productImages.map((image, index) => (
                   <div key={index} className="relative group">
                     <div className="aspect-square rounded-lg overflow-hidden border border-gray-200">
-                      <Image
+                      <img
                         src={image || "/placeholder.svg"}
                         alt={`Product ${index + 1}`}
-                        fill
                         className="object-cover"
                       />
                     </div>
