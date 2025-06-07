@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import {
   FaArrowLeft,
@@ -27,8 +27,8 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function BakeryDashboard({ params }: PageProps) {
-  const bakeryId = (await params).id;
+export default function BakeryDashboard({ params }: PageProps) {
+  const bakeryId = use(params).id;
 
   const [stats, setStats] = useState<any>(null);
   const [recentOrders, setRecentOrders] = useState<any[]>([]);

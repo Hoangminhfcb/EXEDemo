@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace BakeMarket.Domain.Entities
 {
     public class Role : IdentityRole<Guid>
     {
+        [MaxLength(200)]
+        public string? Description { get; set; }
     }
 }

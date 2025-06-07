@@ -51,7 +51,7 @@ namespace BakeMarket.Infrastructure.Data
         private static async Task SeedRolesAsync(RoleManager<Role> roleManager, ILogger logger)
         {
             // List of roles to initialize
-            string[] roleNames = { "Admin", "BakeryOwner", "Customer" };
+            string[] roleNames = { "Admin", "BakeryOwner", "Customer", "DeliveryDriver" };
 
             // Check and create each role
             foreach (var roleName in roleNames)
