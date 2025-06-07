@@ -1,27 +1,21 @@
-import { FaSearch } from "react-icons/fa";
+import { X } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
-export default function Banner() {
+export default function SystemBanner() {
   return (
-    <section className="relative bg-cover bg-center h-120 flex items-center justify-center text-center text-white">
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10">
-        <h1 className="text-4xl font-bold text-white mb-4">
-          Đặt bánh ngọt, giao hàng từ 20 phút
-        </h1>
-        <p className="text-white text-lg mb-8">
-          Có 5000+ Tiệm Bánh Ở TP. Đà Nẵng Từ 00:00 - 23:59
+    <div className="bg-rose-600 text-white py-2 px-4 relative">
+      <div className="container mx-auto text-center">
+        <p className="text-sm font-medium">
+          🎂 Free delivery on orders over $100 | Use code SWEET20 for 20% off your first order
         </p>
-        <div className="w-full max-w-2xl bg-white rounded-lg overflow-hidden flex">
-          <input
-            type="text"
-            placeholder="Tìm bánh sinh nhật, bánh cưới, cupcake..."
-            className="flex-1 px-4 py-3 outline-none"
-          />
-          <button className="bg-pink-600 text-white px-6 py-3">
-            <FaSearch />
-          </button>
-        </div>
       </div>
-    </section>
-  );
+      <Button
+        variant="ghost"
+        size="sm"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:bg-rose-700 p-1 h-auto"
+      >
+        <X className="h-4 w-4" />
+      </Button>
+    </div>
+  )
 }
