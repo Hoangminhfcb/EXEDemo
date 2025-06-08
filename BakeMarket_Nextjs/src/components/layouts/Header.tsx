@@ -32,11 +32,11 @@ export default function Header() {
             <Link href="/custom" className="text-gray-700 hover:text-pink-600 transition-colors">
               Đặt Hàng Riêng
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-pink-600 transition-colors">
-              Giới Thiệu
+            <Link href="/bakery" className="text-gray-700 hover:text-pink-600 transition-colors">
+              Tiệm Bánh
             </Link>
             <Link href="/contact" className="text-gray-700 hover:text-pink-600 transition-colors">
-              Liên Hệ
+              Giới Thiệu
             </Link>
           </nav>
 
