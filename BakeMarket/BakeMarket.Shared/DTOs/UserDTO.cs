@@ -12,7 +12,8 @@ namespace BakeMarket.Shared.DTOs
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";
-        public string Address { get; set; } = string.Empty;
-        public string ProfileImageUrl { get; set; } = string.Empty;
+        public string Address { get; set; }
+        public string ProfileImageUrl { get; set; }
+        public string Description { get; set; }
     }
 }

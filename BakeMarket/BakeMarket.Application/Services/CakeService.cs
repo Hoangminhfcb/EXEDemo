@@ -31,7 +31,7 @@ namespace BakeMarket.Application.Services
 
         public async Task<IEnumerable<Cake>> GetCakesByBakery(Guid bakeryId, CancellationToken cancellationToken = default)
         {
-            return await _cakeRepository.FindByConditionAsync(c => c.BakeryId == bakeryId, cancellationToken);
+            return await _cakeRepository.GetCakesByBakery(bakeryId, cancellationToken);
         }
 
         public async Task<IEnumerable<CakeDTO>> GetCakesByCategory(Guid categoryId, CancellationToken cancellationToken = default)

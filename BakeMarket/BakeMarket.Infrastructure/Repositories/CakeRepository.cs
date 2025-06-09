@@ -63,7 +63,18 @@ namespace BakeMarket.Infrastructure.Repositories
                 .Include(c => c.Category)
                 .Include(c => c.Bakery)
                 .Include(c => c.Images)
+                .Include(c => c.CakeReviews)
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Cake>> GetCakesByBakery(Guid bakeryId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Cakes
+                .Include(c => c.Category)
+                .Include(c => c.Bakery)
+                .Include(c => c.Images)
+                .Include(c => c.CakeReviews)
+                .Where(c => c.BakeryId == bakeryId).ToListAsync(cancellationToken);
         }
     }
 }

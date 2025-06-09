@@ -25,7 +25,8 @@ namespace BakeMarket.API.Controllers
         [HttpGet("Bakery/{id}")]
         public async Task<ActionResult<IEnumerable<Cake>>> GetCakesByBakery(Guid id)
         {
-            return Ok(await _cakeService.GetCakesByBakery(id));
+            var cakes = await _cakeService.GetCakesByBakery(id);
+            return Ok(_mapper.Map<IEnumerable<CakeDTO>>(cakes));
         }
 
         // GET: api/Cakes/Category/{id}
@@ -52,14 +53,14 @@ namespace BakeMarket.API.Controllers
 
         // POST api/<CakesController>
         [HttpPost]
-        public async Task<ActionResult<Cake>> CreateCake([FromBody] CreateCakeRequest request)
+        public async Task<ActionResult<CakeDTO>> CreateCake([FromBody] CreateCakeRequest request)
         {
             if (request == null)
             {
                 return BadRequest("Cake cannot be null");
             }
             var createdCake = await _cakeService.CreateCake(request);
-            return createdCake != null ? Ok(createdCake) : BadRequest("Failed to create cake");
+            return _mapper.Map<CakeDTO>(createdCake);
         }
 
 

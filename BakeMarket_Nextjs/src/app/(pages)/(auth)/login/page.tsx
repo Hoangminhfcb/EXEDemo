@@ -59,7 +59,7 @@ const SignIn = () => {
       );
       setTimeout(() => {
         if (data.roles.includes("BakeryOwner")) {
-          router.push("/dashboard");
+          router.push("/bakery/mybakery");
         } else {
           router.push("/");
         }

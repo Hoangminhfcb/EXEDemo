@@ -1,17 +1,13 @@
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import Header from "@/components/layouts/Header"
-import Footer from "@/components/layouts/Foodter"
-import SystemBanner from "@/components/layouts/Banner"
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Header from "@/components/layouts/Header";
+import Footer from "@/components/layouts/Foodter";
+import SystemBanner from "@/components/layouts/Banner";
 
 export default function CakeEcommerceLanding() {
   return (
     <div className="min-h-screen bg-white">
       {/* System Banner */}
-      {/* <SystemBanner /> */}
-
-      {/* Navigation Header */}
-      {/* <Header /> */}
 
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
@@ -70,9 +66,12 @@ export default function CakeEcommerceLanding() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">Sản Phẩm Nổi Bật</h2>
+            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
+              Sản Phẩm Nổi Bật
+            </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Mỗi chiếc bánh là một kiệt tác, được chế tác cẩn thận với nguyên liệu cao cấp và nghệ thuật tinh tế
+              Mỗi chiếc bánh là một kiệt tác, được chế tác cẩn thận với nguyên
+              liệu cao cấp và nghệ thuật tinh tế
             </p>
           </div>
 
@@ -132,7 +131,10 @@ export default function CakeEcommerceLanding() {
                   tag: "Trẻ Em",
                 },
               ].map((product, index) => (
-                <div key={index} className="flex-none w-80 group cursor-pointer">
+                <div
+                  key={index}
+                  className="flex-none w-80 group cursor-pointer"
+                >
                   <div className="relative overflow-hidden rounded-lg mb-4">
                     <Image
                       src={`/placeholder.svg?height=400&width=400`}
@@ -143,12 +145,18 @@ export default function CakeEcommerceLanding() {
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                      <span className="text-sm font-medium text-gray-900">{product.tag}</span>
+                      <span className="text-sm font-medium text-gray-900">
+                        {product.tag}
+                      </span>
                     </div>
                   </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-2">{product.name}</h3>
+                  <h3 className="text-xl font-medium text-gray-900 mb-2">
+                    {product.name}
+                  </h3>
                   <p className="text-gray-600 mb-3">{product.description}</p>
-                  <p className="text-2xl font-light text-gray-900">{product.price}</p>
+                  <p className="text-2xl font-light text-gray-900">
+                    {product.price}
+                  </p>
                 </div>
               ))}
             </div>
@@ -170,7 +178,9 @@ export default function CakeEcommerceLanding() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">Thư Viện Của Chúng Tôi</h2>
+            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
+              Thư Viện Của Chúng Tôi
+            </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               Duyệt qua bộ sưu tập những chiếc bánh đẹp mắt của chúng tôi
             </p>
@@ -186,11 +196,19 @@ export default function CakeEcommerceLanding() {
                 <div key={item} className="flex-none">
                   <div
                     className={`relative overflow-hidden rounded-lg cursor-pointer group ${
-                      item % 3 === 0 ? "w-64 h-80" : item % 2 === 0 ? "w-48 h-64" : "w-56 h-72"
+                      item % 3 === 0
+                        ? "w-64 h-80"
+                        : item % 2 === 0
+                        ? "w-48 h-64"
+                        : "w-56 h-72"
                     }`}
                   >
                     <Image
-                      src={`/placeholder.svg?height=${item % 3 === 0 ? 320 : item % 2 === 0 ? 256 : 288}&width=${item % 3 === 0 ? 256 : item % 2 === 0 ? 192 : 224}`}
+                      src={`/placeholder.svg?height=${
+                        item % 3 === 0 ? 320 : item % 2 === 0 ? 256 : 288
+                      }&width=${
+                        item % 3 === 0 ? 256 : item % 2 === 0 ? 192 : 224
+                      }`}
                       alt={`Gallery image ${item}`}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -198,7 +216,9 @@ export default function CakeEcommerceLanding() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <p className="font-medium">Custom Design</p>
-                      <p className="text-sm text-white/80">Premium Collection</p>
+                      <p className="text-sm text-white/80">
+                        Premium Collection
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -212,8 +232,12 @@ export default function CakeEcommerceLanding() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">Mua Theo Danh Mục</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">Khám phá các bộ sưu tập chuyên biệt cho mọi dịp</p>
+            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
+              Mua Theo Danh Mục
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Khám phá các bộ sưu tập chuyên biệt cho mọi dịp
+            </p>
           </div>
 
           <div className="relative">
@@ -222,14 +246,41 @@ export default function CakeEcommerceLanding() {
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {[
-                { name: "Bánh Cưới", count: "24 mẫu", image: "/placeholder.svg?height=300&width=400" },
-                { name: "Bánh Sinh Nhật", count: "36 mẫu", image: "/placeholder.svg?height=300&width=400" },
-                { name: "Thiết Kế Riêng", count: "18 mẫu", image: "/placeholder.svg?height=300&width=400" },
-                { name: "Cupcakes", count: "42 loại", image: "/placeholder.svg?height=300&width=400" },
-                { name: "Bánh Theo Mùa", count: "12 mẫu", image: "/placeholder.svg?height=300&width=400" },
-                { name: "Sự Kiện Doanh Nghiệp", count: "15 mẫu", image: "/placeholder.svg?height=300&width=400" },
+                {
+                  name: "Bánh Cưới",
+                  count: "24 mẫu",
+                  image: "/placeholder.svg?height=300&width=400",
+                },
+                {
+                  name: "Bánh Sinh Nhật",
+                  count: "36 mẫu",
+                  image: "/placeholder.svg?height=300&width=400",
+                },
+                {
+                  name: "Thiết Kế Riêng",
+                  count: "18 mẫu",
+                  image: "/placeholder.svg?height=300&width=400",
+                },
+                {
+                  name: "Cupcakes",
+                  count: "42 loại",
+                  image: "/placeholder.svg?height=300&width=400",
+                },
+                {
+                  name: "Bánh Theo Mùa",
+                  count: "12 mẫu",
+                  image: "/placeholder.svg?height=300&width=400",
+                },
+                {
+                  name: "Sự Kiện Doanh Nghiệp",
+                  count: "15 mẫu",
+                  image: "/placeholder.svg?height=300&width=400",
+                },
               ].map((category, index) => (
-                <div key={index} className="flex-none w-72 group cursor-pointer">
+                <div
+                  key={index}
+                  className="flex-none w-72 group cursor-pointer"
+                >
                   <div className="relative overflow-hidden rounded-xl">
                     <Image
                       src={category.image || "/placeholder.svg"}
@@ -240,7 +291,9 @@ export default function CakeEcommerceLanding() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-6 left-6 text-white">
-                      <h3 className="text-xl font-semibold mb-1">{category.name}</h3>
+                      <h3 className="text-xl font-semibold mb-1">
+                        {category.name}
+                      </h3>
                       <p className="text-white/80 text-sm">{category.count}</p>
                     </div>
                   </div>
@@ -256,15 +309,19 @@ export default function CakeEcommerceLanding() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">Câu Chuyện Của Chúng Tôi</h2>
+              <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
+                Câu Chuyện Của Chúng Tôi
+              </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                For over a decade, we've been creating extraordinary cakes that celebrate life's most precious moments.
-                Each creation is a testament to our commitment to quality, artistry, and the joy of sharing something
-                truly special.
+                For over a decade, we've been creating extraordinary cakes that
+                celebrate life's most precious moments. Each creation is a
+                testament to our commitment to quality, artistry, and the joy of
+                sharing something truly special.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                From intimate gatherings to grand celebrations, our cakes are designed to create lasting memories and
-                bring people together around the sweetest moments in life.
+                From intimate gatherings to grand celebrations, our cakes are
+                designed to create lasting memories and bring people together
+                around the sweetest moments in life.
               </p>
               <Button variant="outline" size="lg" className="font-medium">
                 LEARN MORE
@@ -286,5 +343,5 @@ export default function CakeEcommerceLanding() {
       {/* Footer */}
       <Footer />
     </div>
-  )
+  );
 }
