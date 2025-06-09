@@ -91,16 +91,16 @@ export default function Header() {
               Đặt Hàng Riêng
             </Link>
             <Link
-              href="/about"
+              href="/bakery"
               className="text-gray-700 hover:text-pink-600 transition-colors"
             >
-              Giới Thiệu
+              Tiệm Bánh
             </Link>
             <Link
               href="/contact"
               className="text-gray-700 hover:text-pink-600 transition-colors"
             >
-              Liên Hệ
+              Giới Thiệu
             </Link>
           </nav>
 
