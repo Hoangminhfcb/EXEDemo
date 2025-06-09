@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BakeMarket.Domain.Entities;
 using BakeMarket.Infrastructure.Data;
+using BakeMarket.Shared.DTOs;
 
 namespace BakeMarket.API.Controllers
 {
@@ -25,7 +26,16 @@ namespace BakeMarket.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            var categories = await _context.Categories.ToListAsync();
+
+            var response = new ResponseData<IEnumerable<Category>>
+            {
+                Data = categories,
+                Message = "Lấy danh mục thành công",
+                Status = 200
+            };
+
+            return Ok(response);
         }
 
         // GET: api/Categories/5

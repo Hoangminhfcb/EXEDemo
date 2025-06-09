@@ -32,9 +32,9 @@ namespace BakeMarket.Application.Mappings
             CreateMap<CreateCakeRequest, Cake>()
                         .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images));
 
-            CreateMap<CakeImageDTO, CakeImage>();
+            CreateMap<CakeImageDTO, CakeImage>().ReverseMap();
             CreateMap<BakeryImage, BakeryImageDTO>();
-            CreateMap<Category, CategoryDTO>();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<OrderCreateRequest, Order>();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();

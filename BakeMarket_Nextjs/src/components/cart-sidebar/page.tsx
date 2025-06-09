@@ -1,35 +1,36 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { X, Plus, Minus, Trash2, ShoppingCart, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { X, Plus, Minus, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CartItem {
-  id: string
-  productId: string
-  name: string
-  image: string
-  price: number
-  discountPrice?: number
-  quantity: number
-  size?: string
-  flavor?: string
-  customization?: string
-  bakeryName: string
-  bakeryId: string
+  id: string;
+  productId: string;
+  name: string;
+  image: string;
+  price: number;
+  discountPrice?: number;
+  quantity: number;
+  size?: string;
+  flavor?: string;
+  customization?: string;
+  bakeryName: string;
+  bakeryId: string;
 }
 
 interface CartSidebarProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+  console.log("Cart items:", isOpen);
   // Mock cart data - in real app, this would come from context/state management
   useEffect(() => {
     const mockCartItems: CartItem[] = [
@@ -67,84 +68,93 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
         bakeryName: "Golden Cake House",
         bakeryId: "2",
       },
-    ]
-    setCartItems(mockCartItems)
-  }, [])
+    ];
+    setCartItems(mockCartItems);
+  }, []);
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(price)
-  }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
 
   const updateQuantity = (itemId: string, newQuantity: number) => {
-    if (newQuantity < 1) return
-    setCartItems(cartItems.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item)))
-  }
+    if (newQuantity < 1) return;
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
 
   const removeItem = (itemId: string) => {
-    setCartItems(cartItems.filter((item) => item.id !== itemId))
-  }
+    setCartItems(cartItems.filter((item) => item.id !== itemId));
+  };
 
   const clearCart = () => {
-    setCartItems([])
-  }
+    setCartItems([]);
+  };
 
   const getItemPrice = (item: CartItem) => {
-    return item.discountPrice || item.price
-  }
+    return item.discountPrice || item.price;
+  };
 
   const getItemTotal = (item: CartItem) => {
-    return getItemPrice(item) * item.quantity
-  }
+    return getItemPrice(item) * item.quantity;
+  };
 
   const getSubtotal = () => {
-    return cartItems.reduce((total, item) => total + getItemTotal(item), 0)
-  }
+    return cartItems.reduce((total, item) => total + getItemTotal(item), 0);
+  };
 
   const getDeliveryFee = () => {
     // Free delivery for orders over 5,000,000 VND
-    return getSubtotal() >= 5000000 ? 0 : 200000
-  }
+    return getSubtotal() >= 5000000 ? 0 : 200000;
+  };
 
   const getTotal = () => {
-    return getSubtotal() + getDeliveryFee()
-  }
+    return getSubtotal() + getDeliveryFee();
+  };
 
   const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0)
-  }
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
 
   // Group items by bakery
-  const groupedItems = cartItems.reduce(
-    (groups, item) => {
-      const bakeryId = item.bakeryId
-      if (!groups[bakeryId]) {
-        groups[bakeryId] = {
-          bakeryName: item.bakeryName,
-          bakeryId: item.bakeryId,
-          items: [],
-        }
-      }
-      groups[bakeryId].items.push(item)
-      return groups
-    },
-    {} as Record<string, { bakeryName: string; bakeryId: string; items: CartItem[] }>,
-  )
+  const groupedItems = cartItems.reduce((groups, item) => {
+    const bakeryId = item.bakeryId;
+    if (!groups[bakeryId]) {
+      groups[bakeryId] = {
+        bakeryName: item.bakeryName,
+        bakeryId: item.bakeryId,
+        items: [],
+      };
+    }
+    groups[bakeryId].items.push(item);
+    return groups;
+  }, {} as Record<string, { bakeryName: string; bakeryId: string; items: CartItem[] }>);
 
   const handleCheckout = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     // Simulate checkout process
     setTimeout(() => {
-      setIsLoading(false)
-      onClose()
+      setIsLoading(false);
+      onClose();
       // In real app, navigate to checkout page
-      window.location.href = "/checkout"
-    }, 1000)
-  }
+      window.location.href = "/checkout";
+    }, 1000);
+  };
 
   return (
     <>
       {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={onClose} />}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
+          onClick={() => console.log("Overlay clicked")}
+        />
+      )}
 
       {/* Sidebar */}
       <div
@@ -158,10 +168,16 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
             <div className="flex items-center">
               <ShoppingCart className="text-pink-600 mr-2 h-5 w-5" />
               <h2 className="text-lg font-semibold">
-                Giỏ hàng ({getTotalItems()} {getTotalItems() === 1 ? "sản phẩm" : "sản phẩm"})
+                Giỏ hàng ({getTotalItems()}{" "}
+                {getTotalItems() === 1 ? "sản phẩm" : "sản phẩm"})
               </h2>
             </div>
-            <Button variant="ghost" size="sm" onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700"
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -174,9 +190,16 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 <div className="bg-gray-100 rounded-full p-6 mb-4">
                   <ShoppingCart className="text-gray-400 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Giỏ hàng trống</h3>
-                <p className="text-gray-500 mb-6">Thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm</p>
-                <Button onClick={onClose} className="bg-pink-600 hover:bg-pink-700">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Giỏ hàng trống
+                </h3>
+                <p className="text-gray-500 mb-6">
+                  Thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm
+                </p>
+                <Button
+                  onClick={onClose}
+                  className="bg-pink-600 hover:bg-pink-700"
+                >
                   Tiếp tục mua sắm
                 </Button>
               </div>
@@ -200,7 +223,10 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 {/* Grouped by Bakery */}
                 <div className="space-y-6">
                   {Object.values(groupedItems).map((group) => (
-                    <div key={group.bakeryId} className="border border-gray-200 rounded-lg p-4">
+                    <div
+                      key={group.bakeryId}
+                      className="border border-gray-200 rounded-lg p-4"
+                    >
                       {/* Bakery Header */}
                       <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
                         <Link
@@ -210,7 +236,9 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                         >
                           {group.bakeryName}
                         </Link>
-                        <span className="text-sm text-gray-500">{group.items.length} sản phẩm</span>
+                        <span className="text-sm text-gray-500">
+                          {group.items.length} sản phẩm
+                        </span>
                       </div>
 
                       {/* Items from this bakery */}
@@ -219,7 +247,11 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                           <div key={item.id} className="space-y-3">
                             {/* Product Header with Image and Name */}
                             <div className="flex items-start space-x-3">
-                              <Link href={`/products/${item.productId}`} className="flex-shrink-0" onClick={onClose}>
+                              <Link
+                                href={`/products/${item.productId}`}
+                                className="flex-shrink-0"
+                                onClick={onClose}
+                              >
                                 <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200">
                                   <Image
                                     src={item.image || "/placeholder.svg"}
@@ -239,11 +271,19 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                 </Link>
                                 {/* Product Options */}
                                 <div className="text-xs text-gray-500 mt-1">
-                                  {item.size && <span>Kích thước: {item.size}</span>}
-                                  {item.flavor && <span className="ml-2">Hương vị: {item.flavor}</span>}
+                                  {item.size && (
+                                    <span>Kích thước: {item.size}</span>
+                                  )}
+                                  {item.flavor && (
+                                    <span className="ml-2">
+                                      Hương vị: {item.flavor}
+                                    </span>
+                                  )}
                                 </div>
                                 {item.customization && (
-                                  <div className="text-xs text-gray-500">Tùy chỉnh: {item.customization}</div>
+                                  <div className="text-xs text-gray-500">
+                                    Tùy chỉnh: {item.customization}
+                                  </div>
                                 )}
                               </div>
                             </div>
@@ -261,7 +301,9 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                     </span>
                                   </div>
                                 ) : (
-                                  <span className="font-semibold text-pink-600 text-sm">{formatPrice(item.price)}</span>
+                                  <span className="font-semibold text-pink-600 text-sm">
+                                    {formatPrice(item.price)}
+                                  </span>
                                 )}
                               </div>
 
@@ -270,17 +312,23 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  onClick={() =>
+                                    updateQuantity(item.id, item.quantity - 1)
+                                  }
                                   disabled={item.quantity <= 1}
                                   className="h-7 w-7 p-0"
                                 >
                                   <Minus className="h-3 w-3" />
                                 </Button>
-                                <span className="w-6 text-center font-medium text-sm">{item.quantity}</span>
+                                <span className="w-6 text-center font-medium text-sm">
+                                  {item.quantity}
+                                </span>
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  onClick={() =>
+                                    updateQuantity(item.id, item.quantity + 1)
+                                  }
                                   className="h-7 w-7 p-0"
                                 >
                                   <Plus className="h-3 w-3" />
@@ -323,18 +371,25 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Phí giao hàng:</span>
-                  <span className={getDeliveryFee() === 0 ? "text-green-600" : ""}>
-                    {getDeliveryFee() === 0 ? "Miễn phí" : formatPrice(getDeliveryFee())}
+                  <span
+                    className={getDeliveryFee() === 0 ? "text-green-600" : ""}
+                  >
+                    {getDeliveryFee() === 0
+                      ? "Miễn phí"
+                      : formatPrice(getDeliveryFee())}
                   </span>
                 </div>
                 {getSubtotal() < 5000000 && getDeliveryFee() > 0 && (
                   <div className="text-xs text-gray-500">
-                    Mua thêm {formatPrice(5000000 - getSubtotal())} để được miễn phí giao hàng
+                    Mua thêm {formatPrice(5000000 - getSubtotal())} để được miễn
+                    phí giao hàng
                   </div>
                 )}
                 <div className="flex justify-between font-semibold text-lg pt-2 border-t border-gray-300">
                   <span>Tổng cộng:</span>
-                  <span className="text-pink-600">{formatPrice(getTotal())}</span>
+                  <span className="text-pink-600">
+                    {formatPrice(getTotal())}
+                  </span>
                 </div>
               </div>
 
@@ -376,5 +431,5 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
         </div>
       </div>
     </>
-  )
+  );
 }
