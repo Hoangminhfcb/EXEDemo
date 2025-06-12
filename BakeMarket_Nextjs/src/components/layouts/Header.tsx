@@ -171,7 +171,7 @@ export default function Header() {
         </div>
       </div>
       {/* Cart Sidebar */}
-      {/* <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} /> */}
+      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 }
