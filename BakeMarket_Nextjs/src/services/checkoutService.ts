@@ -1,374 +1,292 @@
-import type {
-  CartItem,
-  ShippingMethod,
-  PaymentMethod,
-  Coupon,
-  OrderSummary,
-  CheckoutData,
-  OrderRequest,
-  OrderResponse,
-} from "@/types/checkout"
+import { getCart, clearCart } from "@/utils/cartStorage"
+import type { CartItem } from "@/utils/cartStorage"
+import { getBakeryGuid } from "@/utils/guid-utils"
 
-// Get checkout data (cart items, shipping methods, payment methods)
-export const getCheckoutData = async (): Promise<CheckoutData> => {
-  try {
-    // For now, return mock data. Later you can replace with real API call
-    const mockCartItems: CartItem[] = [
-      {
-        id: "cart-1",
-        productId: "banh-cuoi-co-dien",
-        name: "Bánh Cưới Sang Trọng",
-        image: "/placeholder.svg?height=400&width=400",
-        price: 7200000,
-        discountPrice: 6500000,
-        quantity: 1,
-        size: "3 Tầng",
-        flavor: "Vanilla",
-        bakeryId: "1",
-        bakeryName: "Sweet Dreams Bakery",
-      },
-      {
-        id: "cart-2",
-        productId: "thap-cupcake",
-        name: "Tháp Cupcake",
-        image: "/placeholder.svg?height=400&width=400",
-        price: 1900000,
-        quantity: 2,
-        bakeryId: "1",
-        bakeryName: "Sweet Dreams Bakery",
-      },
-    ]
-
-    const mockShippingMethods: ShippingMethod[] = [
-      {
-        id: "standard",
-        name: "Giao hàng tiêu chuẩn",
-        description: "Giao hàng trong 2-3 ngày",
-        price: 30000,
-        estimatedDelivery: "2-3 ngày",
-      },
-      {
-        id: "express",
-        name: "Giao hàng nhanh",
-        description: "Giao hàng trong 24 giờ",
-        price: 60000,
-        estimatedDelivery: "24 giờ",
-      },
-      {
-        id: "free",
-        name: "Giao hàng miễn phí",
-        description: "Cho đơn hàng trên 5.000.000₫",
-        price: 0,
-        estimatedDelivery: "3-5 ngày",
-      },
-    ]
-
-    const mockPaymentMethods: PaymentMethod[] = [
-      {
-        id: "cod",
-        name: "Thanh toán khi nhận hàng (COD)",
-        icon: "cash",
-        description: "Thanh toán bằng tiền mặt khi nhận hàng",
-      },
-      {
-        id: "bank-transfer",
-        name: "Chuyển khoản ngân hàng",
-        icon: "bank",
-        description: "Chuyển khoản trước khi giao hàng",
-      },
-      {
-        id: "momo",
-        name: "Ví MoMo",
-        icon: "wallet",
-        description: "Thanh toán qua ví điện tử MoMo",
-      },
-      {
-        id: "zalopay",
-        name: "ZaloPay",
-        icon: "wallet",
-        description: "Thanh toán qua ví điện tử ZaloPay",
-      },
-      {
-        id: "credit-card",
-        name: "Thẻ tín dụng / Ghi nợ",
-        icon: "credit-card",
-        description: "Thanh toán an toàn qua cổng thanh toán",
-      },
-    ]
-
-    // Calculate order summary based on cart items
-    const subtotal = mockCartItems.reduce((total, item) => {
-      const itemPrice = item.discountPrice || item.price
-      return total + itemPrice * item.quantity
-    }, 0)
-
-    // Apply free shipping if subtotal is over 5,000,000₫
-    const shippingCost = subtotal >= 5000000 ? 0 : 30000
-
-    const mockOrderSummary: OrderSummary = {
-      subtotal: subtotal,
-      shipping: shippingCost,
-      discount: 0,
-      tax: Math.round(subtotal * 0.08), // 8% tax
-      total: subtotal + shippingCost + Math.round(subtotal * 0.08),
-    }
-
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    return {
-      cartItems: mockCartItems,
-      shippingMethods: mockShippingMethods,
-      paymentMethods: mockPaymentMethods,
-      orderSummary: mockOrderSummary,
-    }
-
-    // When ready to use real API, uncomment this:
-    /*
-    const response = await fetchInterceptor(`${API_URL}/api/checkout`, {
-      method: "GET",
-      skipAuth: false, // Set to true if authentication is not required
-    })
-    return await response.json()
-    */
-  } catch (error) {
-    console.error("Error fetching checkout data:", error)
-    throw error
-  }
+// Define types that match your C# OrderCreateRequest structure
+export interface CustomerInfo {
+  fullName: string
+  phone: string
+  email?: string
+  address: string
+  district?: string
+  city?: string
+  notes?: string
 }
 
-// Apply coupon code
-export const applyCoupon = async (code: string): Promise<Coupon | null> => {
+// Updated to match C# API structure
+export interface OrderItemCreateRequest {
+  cakeId: string // Changed from productId to cakeId
+  quantity: number
+  unitPrice: number
+}
+
+// Updated to match C# API structure
+export interface OrderCreateRequest {
+  orderDate?: string
+  status?: number
+  deliveryAddress: string
+  contactPhone: string
+  customerId: string // Required GUID
+  bakeryId: string
+  items: OrderItemCreateRequest[]
+}
+
+export interface OrderDTO {
+  id: string
+  orderDate: string
+  status: number
+  deliveryAddress: string
+  contactPhone: string
+  totalAmount: number
+  customerId: string
+  bakeryId: string
+  items: OrderItemDTO[]
+}
+
+export interface OrderItemDTO {
+  id: string
+  cakeId: string // Changed from productId to cakeId
+  quantity: number
+  unitPrice: number
+  subtotal: number
+}
+
+export interface OrderResponse {
+  orderId: string
+  status: string
+  message: string
+  orderDate: string
+}
+
+// Determine API base URL based on environment
+const isDevelopment = process.env.NODE_ENV === "development"
+const API_BASE_URL = isDevelopment ? "http://localhost:5000/api" : "http://api.zanis.id.vn/api"
+
+// Default customer GUID for anonymous orders
+const DEFAULT_CUSTOMER_GUID = "00000000-0000-0000-0000-000000000000"
+
+/**
+ * Create an order using the API
+ */
+export const createOrder = async (customerInfo: CustomerInfo): Promise<OrderResponse> => {
   try {
-    // Mock coupon validation
-    const validCoupons: Record<string, Coupon> = {
-      SWEET20: {
-        code: "SWEET20",
-        discount: 20,
-        discountType: "percentage",
-        description: "Giảm 20% cho đơn hàng đầu tiên",
-      },
-      FREESHIP: {
-        code: "FREESHIP",
-        discount: 30000,
-        discountType: "fixed",
-        description: "Miễn phí giao hàng",
-      },
-      CAKE100K: {
-        code: "CAKE100K",
-        discount: 100000,
-        discountType: "fixed",
-        description: "Giảm 100.000₫ cho đơn hàng từ 1.000.000₫",
-      },
+    // Get cart items from local storage
+    const cartItems = getCart()
+
+    if (cartItems.length === 0) {
+      throw new Error("Giỏ hàng trống")
     }
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300))
+    // Group items by bakery (taking first bakery for now)
+    const bakeryGroups = cartItems.reduce(
+      (groups, item) => {
+        if (!groups[item.bakeryId]) {
+          groups[item.bakeryId] = []
+        }
+        groups[item.bakeryId].push(item)
+        return groups
+      },
+      {} as Record<string, CartItem[]>,
+    )
 
-    const coupon = validCoupons[code.toUpperCase()]
-    if (!coupon) {
-      return null
+    const bakeryIds = Object.keys(bakeryGroups)
+    if (bakeryIds.length === 0) {
+      throw new Error("Không tìm thấy thông tin tiệm bánh")
     }
 
-    return coupon
+    // Take the first bakery (you can modify this logic for multiple bakeries)
+    const primaryBakeryId = bakeryIds[0]
+    const orderItems = bakeryGroups[primaryBakeryId]
 
-    // When ready to use real API, uncomment this:
-    /*
-    const response = await fetchInterceptor(`${API_URL}/api/coupons/validate`, {
+    // Convert cart items to order items format matching C# API
+    const orderItemRequests: OrderItemCreateRequest[] = orderItems.map((item) => ({
+      cakeId: item.productId, // Use cakeId instead of productId
+      quantity: item.quantity,
+      unitPrice: item.discountPrice || item.price,
+    }))
+
+    // Format delivery address
+    const deliveryAddress = [customerInfo.address, customerInfo.district, customerInfo.city].filter(Boolean).join(", ")
+
+    // Create order request matching your C# OrderCreateRequest structure
+    const orderCreateRequest: OrderCreateRequest = {
+      orderDate: new Date().toISOString(),
+      status: 0, // Pending status
+      deliveryAddress,
+      contactPhone: customerInfo.phone,
+      customerId: DEFAULT_CUSTOMER_GUID, // Use default customer GUID for anonymous orders
+      bakeryId: getBakeryGuid(primaryBakeryId),
+      items: orderItemRequests,
+    }
+
+    console.log("Creating order with data:", orderCreateRequest)
+
+    // Call your API endpoint: POST /api/Orders
+    const response = await fetch(`${API_BASE_URL}/Orders`, {
       method: "POST",
-      body: JSON.stringify({ code }),
-      skipAuth: false,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(orderCreateRequest),
     })
-    return await response.json()
-    */
+
+    console.log("API Response status:", response.status)
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error("API Error Response:", errorText)
+
+      // Try to parse error response for better error messages
+      try {
+        const errorData = JSON.parse(errorText)
+        if (errorData.message) {
+          throw new Error(errorData.message)
+        }
+        if (errorData.errors) {
+          const errorMessages = Object.values(errorData.errors).flat().join(", ")
+          throw new Error(errorMessages)
+        }
+      } catch (parseError) {
+        // If we can't parse the error, use the status text
+        throw new Error(`Lỗi tạo đơn hàng: ${response.status} ${response.statusText}`)
+      }
+    }
+
+    // Parse the OrderDTO response
+    const orderDTO: OrderDTO = await response.json()
+    console.log("Order created successfully:", orderDTO)
+
+    // Clear cart after successful order
+    clearCart()
+
+    // Return formatted response
+    return {
+      orderId: orderDTO.id,
+      status: "success",
+      message: "Đơn hàng đã được tạo thành công",
+      orderDate: orderDTO.orderDate,
+    }
   } catch (error) {
-    console.error("Error validating coupon:", error)
+    console.error("Error creating order:", error)
+
+    // Provide more specific error messages
+    if (error instanceof TypeError && error.message.includes("Failed to fetch")) {
+      if (isDevelopment) {
+        throw new Error(
+          `Không thể kết nối đến server. Vui lòng kiểm tra xem API server có đang chạy ở ${API_BASE_URL} không?`,
+        )
+      } else {
+        throw new Error("Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng hoặc liên hệ hỗ trợ.")
+      }
+    }
+
     throw error
   }
 }
 
-// Calculate order summary with applied coupon
-export const calculateOrderSummary = (
-  cartItems: CartItem[],
-  shippingCost: number,
-  coupon: Coupon | null,
-): OrderSummary => {
-  const subtotal = cartItems.reduce((total, item) => {
-    const itemPrice = item.discountPrice || item.price
-    return total + itemPrice * item.quantity
+/**
+ * Get order details by ID
+ */
+export const getOrderById = async (orderId: string): Promise<any> => {
+  try {
+    console.log("Fetching order details for ID:", orderId)
+
+    const response = await fetch(`${API_BASE_URL}/Orders/${orderId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    console.log("Get order response status:", response.status)
+
+    if (response.status === 404) {
+      throw new Error("Không tìm thấy đơn hàng")
+    }
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error("API Error Response:", errorText)
+      throw new Error(`Lỗi tải thông tin đơn hàng: ${response.status} ${response.statusText}`)
+    }
+
+    const orderDTO: OrderDTO = await response.json()
+    console.log("Order data received:", orderDTO)
+
+    // Transform the OrderDTO response to match your frontend expectations
+    return {
+      id: orderDTO.id,
+      date: orderDTO.orderDate,
+      status: mapOrderStatus(orderDTO.status),
+      paymentMethod: "Thanh toán khi nhận hàng (COD)",
+      shippingMethod: "Giao hàng tiêu chuẩn",
+      estimatedDelivery: new Date(new Date(orderDTO.orderDate).getTime() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+      items:
+        orderDTO.items?.map((item: OrderItemDTO) => ({
+          id: item.id,
+          name: `Sản phẩm ${item.cakeId}`, // Updated to use cakeId
+          image: "/placeholder.svg?height=400&width=400",
+          price: item.unitPrice,
+          quantity: item.quantity,
+        })) || [],
+      shippingAddress: {
+        fullName: "Khách hàng",
+        phone: orderDTO.contactPhone,
+        email: "",
+        address: orderDTO.deliveryAddress,
+        district: "",
+        city: "",
+      },
+      subtotal: orderDTO.totalAmount,
+      shipping: 0,
+      discount: 0,
+      tax: 0,
+      total: orderDTO.totalAmount,
+    }
+  } catch (error) {
+    console.error("Error fetching order:", error)
+    throw error
+  }
+}
+
+/**
+ * Map OrderStatus enum to display text
+ */
+const mapOrderStatus = (status: number): string => {
+  const statusMap: Record<number, string> = {
+    0: "Chờ xác nhận",
+    1: "Đã xác nhận",
+    2: "Đang chuẩn bị",
+    3: "Sẵn sàng giao hàng",
+    4: "Đang giao hàng",
+    5: "Đã giao hàng",
+    6: "Đã hủy",
+  }
+  return statusMap[status] || "Không xác định"
+}
+
+/**
+ * Calculate order totals from cart items
+ */
+export const calculateOrderTotals = () => {
+  const cartItems = getCart()
+
+  const subtotal = cartItems.reduce((sum, item) => {
+    const price = item.discountPrice || item.price
+    return sum + price * item.quantity
   }, 0)
 
-  let discount = 0
-  if (coupon) {
-    if (coupon.discountType === "percentage") {
-      discount = Math.round(subtotal * (coupon.discount / 100))
-    } else {
-      discount = coupon.discount
-    }
-  }
-
-  const tax = Math.round((subtotal - discount) * 0.08) // 8% tax
-  const total = subtotal + shippingCost - discount + tax
+  // Free shipping for orders over 5,000,000 VND
+  const shippingFee = subtotal >= 5000000 ? 0 : 200000
 
   return {
     subtotal,
-    shipping: shippingCost,
-    discount,
-    tax,
-    total,
+    shippingFee,
+    total: subtotal + shippingFee,
+    itemCount: cartItems.reduce((sum, item) => sum + item.quantity, 0),
   }
-}
-
-// Submit order
-export const submitOrder = async (orderData: OrderRequest): Promise<OrderResponse> => {
-  try {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    // Mock successful order response
-    const mockResponse: OrderResponse = {
-      orderId: "ORD-" + Math.floor(100000 + Math.random() * 900000).toString(),
-      status: "success",
-      message: "Đơn hàng đã được đặt thành công!",
-      redirectUrl: "/order-confirmation",
-    }
-
-    return mockResponse
-
-    // When ready to use real API, uncomment this:
-    /*
-    const response = await fetchInterceptor(`${API_URL}/api/orders`, {
-      method: "POST",
-      body: JSON.stringify(orderData),
-      skipAuth: false,
-    })
-    return await response.json()
-    */
-  } catch (error) {
-    console.error("Error submitting order:", error)
-    throw error
-  }
-}
-
-// Get provinces/cities
-export const getProvinces = async (): Promise<string[]> => {
-  // Mock provinces data
-  const provinces = [
-    "Hà Nội",
-    "TP. Hồ Chí Minh",
-    "Đà Nẵng",
-    "Hải Phòng",
-    "Cần Thơ",
-    "An Giang",
-    "Bà Rịa - Vũng Tàu",
-    "Bắc Giang",
-    "Bắc Kạn",
-    "Bạc Liêu",
-    "Bắc Ninh",
-    "Bến Tre",
-    "Bình Định",
-    "Bình Dương",
-    "Bình Phước",
-    "Bình Thuận",
-    "Cà Mau",
-    "Cao Bằng",
-    "Đắk Lắk",
-    "Đắk Nông",
-    "Điện Biên",
-    "Đồng Nai",
-    "Đồng Tháp",
-    "Gia Lai",
-    "Hà Giang",
-    "Hà Nam",
-    "Hà Tĩnh",
-    "Hải Dương",
-    "Hậu Giang",
-    "Hòa Bình",
-    "Hưng Yên",
-    "Khánh Hòa",
-    "Kiên Giang",
-    "Kon Tum",
-    "Lai Châu",
-    "Lâm Đồng",
-    "Lạng Sơn",
-    "Lào Cai",
-    "Long An",
-    "Nam Định",
-    "Nghệ An",
-    "Ninh Bình",
-    "Ninh Thuận",
-    "Phú Thọ",
-    "Phú Yên",
-    "Quảng Bình",
-    "Quảng Nam",
-    "Quảng Ngãi",
-    "Quảng Ninh",
-    "Quảng Trị",
-    "Sóc Trăng",
-    "Sơn La",
-    "Tây Ninh",
-    "Thái Bình",
-    "Thái Nguyên",
-    "Thanh Hóa",
-    "Thừa Thiên Huế",
-    "Tiền Giang",
-    "Trà Vinh",
-    "Tuyên Quang",
-    "Vĩnh Long",
-    "Vĩnh Phúc",
-    "Yên Bái",
-  ]
-
-  return provinces
-}
-
-// Get districts for a province
-export const getDistricts = async (province: string): Promise<string[]> => {
-  // Mock districts data - simplified for demo
-  const districtsByProvince: Record<string, string[]> = {
-    "TP. Hồ Chí Minh": [
-      "Quận 1",
-      "Quận 2",
-      "Quận 3",
-      "Quận 4",
-      "Quận 5",
-      "Quận 6",
-      "Quận 7",
-      "Quận 8",
-      "Quận 9",
-      "Quận 10",
-      "Quận 11",
-      "Quận 12",
-      "Quận Bình Tân",
-      "Quận Bình Thạnh",
-      "Quận Gò Vấp",
-      "Quận Phú Nhuận",
-      "Quận Tân Bình",
-      "Quận Tân Phú",
-      "Quận Thủ Đức",
-      "Huyện Bình Chánh",
-      "Huyện Cần Giờ",
-      "Huyện Củ Chi",
-      "Huyện Hóc Môn",
-      "Huyện Nhà Bè",
-    ],
-    "Hà Nội": [
-      "Quận Ba Đình",
-      "Quận Hoàn Kiếm",
-      "Quận Tây Hồ",
-      "Quận Long Biên",
-      "Quận Cầu Giấy",
-      "Quận Đống Đa",
-      "Quận Hai Bà Trưng",
-      "Quận Hoàng Mai",
-      "Quận Thanh Xuân",
-      "Quận Hà Đông",
-      "Quận Nam Từ Liêm",
-      "Quận Bắc Từ Liêm",
-    ],
-    // Add more provinces as needed
-  }
-
-  // Return districts for the selected province or an empty array
-  return districtsByProvince[province] || []
 }
