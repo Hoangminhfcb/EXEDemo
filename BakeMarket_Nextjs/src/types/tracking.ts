@@ -1,3 +1,23 @@
+export interface TrackingRequest {
+  phone: string
+}
+
+export interface OrderStatus {
+  code: string
+  name: string
+  description: string
+  color: string
+}
+
+export interface TrackingEvent {
+  id: string
+  timestamp: Date
+  status: string
+  location: string
+  description: string
+  isCompleted: boolean
+}
+
 export interface TrackingInfo {
   orderId: string
   trackingNumber: string
@@ -10,22 +30,6 @@ export interface TrackingInfo {
   shippingAddress: ShippingAddress
   trackingHistory: TrackingEvent[]
   orderItems: OrderItem[]
-}
-
-export interface TrackingEvent {
-  id: string
-  timestamp: Date
-  status: string
-  location: string
-  description: string
-  isCompleted: boolean
-}
-
-export interface OrderStatus {
-  code: string
-  name: string
-  description: string
-  color: string
 }
 
 export interface ShippingAddress {
@@ -42,8 +46,4 @@ export interface OrderItem {
   image: string
   quantity: number
   price: number
-}
-
-export interface TrackingRequest {
-  phone?: string
 }

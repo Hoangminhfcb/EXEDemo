@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import Image from "next/image"
 import {
@@ -25,8 +24,6 @@ import type { TrackingInfo, TrackingRequest } from "@/types/tracking"
 
 export default function TrackingPage() {
   // State for form inputs
-  const [searchType, setSearchType] = useState<"phone">("phone")
-  const [trackingNumber, setTrackingNumber] = useState<string>("")
   const [phone, setPhone] = useState<string>("")
 
   // State for tracking results
@@ -100,9 +97,9 @@ export default function TrackingPage() {
     setTrackingInfo(null)
     setSearched(true)
 
-    // Validate inputs
-    if (searchType === "phone" && !setPhone) {
-      setError("Vui lòng nhập SDT")
+    // Validate phone input
+    if (!phone.trim()) {
+      setError("Vui lòng nhập số điện thoại")
       return
     }
 
@@ -110,23 +107,24 @@ export default function TrackingPage() {
       setLoading(true)
 
       const request: TrackingRequest = {
-        phone: phone.trim() || undefined,
+        phone: phone.trim(),
       }
 
       const result = await getTrackingInfo(request)
 
-
-
       if (!result) {
-        setError("Không tìm thấy thông tin đơn hàng. Vui lòng kiểm tra lại SDT.")
+        setError("Không tìm thấy thông tin đơn hàng. Vui lòng kiểm tra lại số điện thoại.")
         return
       }
-      
-    setTrackingInfo(result)
 
+      setTrackingInfo(result)
     } catch (err) {
-      setError("Đã xảy ra lỗi khi tra cứu đơn hàng. Vui lòng thử lại sau.")
       console.error("Error tracking order:", err)
+      if (err instanceof Error) {
+        setError(`Đã xảy ra lỗi: ${err.message}`)
+      } else {
+        setError("Đã xảy ra lỗi khi tra cứu đơn hàng. Vui lòng thử lại sau.")
+      }
     } finally {
       setLoading(false)
     }
@@ -142,22 +140,17 @@ export default function TrackingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
-
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Tra cứu đơn hàng</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Nhập SDT để theo dõi tình trạng giao hàng của bạn
-          </p>
+          <p className="text-gray-600 max-w-2xl mx-auto">Nhập số điện thoại để theo dõi tình trạng giao hàng của bạn</p>
         </div>
 
         {/* Search Form */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8 max-w-2xl mx-auto">
           <form onSubmit={handleSearch} className="space-y-4">
-
-            {/* Phone Number (Optional) */}
+            {/* Phone Number */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại *</label>
               <div className="relative">
@@ -170,15 +163,16 @@ export default function TrackingPage() {
                   onChange={(e) => setPhone(e.target.value)}
                   className="pl-10 w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-pink-500 focus:border-pink-500"
                   placeholder="0912345678"
+                  required
                 />
               </div>
-              <p className="mt-1 text-xs text-gray-500">Nhập số điện thoại để tra cứu</p>
+              <p className="mt-1 text-xs text-gray-500">Nhập số điện thoại để tra cứu đơn hàng</p>
             </div>
 
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center">
-                <FaExclamationCircle className="text-red-500 mr-2" />
+                <FaExclamationCircle className="text-red-500 mr-2 flex-shrink-0" />
                 <span className="text-red-700 text-sm">{error}</span>
               </div>
             )}
@@ -364,7 +358,7 @@ export default function TrackingPage() {
               <FaExclamationCircle className="mx-auto h-12 w-12" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">Không tìm thấy đơn hàng</h3>
-            <p className="text-gray-600 mb-6">Vui lòng kiểm tra lại SDT và thử lại.</p>
+            <p className="text-gray-600 mb-6">Vui lòng kiểm tra lại số điện thoại và thử lại.</p>
             <button
               onClick={handleReset}
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-600 hover:bg-pink-700"
@@ -396,7 +390,6 @@ export default function TrackingPage() {
           </div>
         </div>
       </div>
-
     </div>
   )
 }
