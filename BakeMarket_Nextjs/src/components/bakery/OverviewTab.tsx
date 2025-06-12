@@ -17,7 +17,7 @@ export default function OverviewTab({
       </div>
 
       <div className="space-y-6">
-        <OwnerInfo {...bakery} />
+        <OwnerInfo bakery={bakery} />
       </div>
     </div>
   );

@@ -1,37 +1,19 @@
-import { API_URL } from "@/utils/BaseUrl"
-import { fetchInterceptor } from "@/utils/Interceptor"
-  // @ts-expect-error
-import type { Product, RelatedProduct } from "@/types/product"
+import { API_URL } from "@/utils/BaseUrl";
+import { fetchInterceptor } from "@/utils/Interceptor";
+// @ts-expect-error
+import type { Product, RelatedProduct } from "@/types/product";
 
 export const getProductById = async (id: string): Promise<Product> => {
   try {
     // For now, return mock data. Later you can replace with real API call
-    const mockProduct: Product = {
-      id: id,
-      name: "Bánh Sinh Nhật Hoa Tươi",
-      address: "47/45 Nguyễn Tư Giản, Gò Vấp",
-      description:
-        "Bánh sinh nhật trang trí hoa tươi tự nhiên, làm từ kem tươi Pháp và trái cây theo mùa. Bánh có độ ngọt vừa phải, phù hợp với khẩu vị người Việt. Có thể tùy chỉnh kích thước, màu sắc và hương vị theo yêu cầu.",
-      price: 350000,
-      discountPrice: 299000,
-      discount: true,
-      favorite: false,
-      rating: 4.8,
-      reviewCount: 124,
-      images: ["/images/cake1.jpg", "/images/cake2.jpg", "/images/cake3.jpg", "/images/cake4.jpg"],
-      sizes: [
-        { name: "12cm (2-4 người)", price: 299000 },
-        { name: "15cm (4-6 người)", price: 399000 },
-        { name: "18cm (8-12 người)", price: 499000 },
-        { name: "22cm (15-20 người)", price: 699000 },
-      ],
-      flavors: ["Vani", "Socola", "Dâu tây", "Trà xanh", "Chanh dây"],
+
+    const res = await fetch(`${API_URL}/api/cakes/${id}`);
+    if (!res.ok) {
+      throw new Error(`Error fetching product: ${res.statusText}`);
     }
+    const data = await res.json();
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    return mockProduct
+    return data;
 
     // When ready to use real API, uncomment this:
     /*
@@ -42,12 +24,14 @@ export const getProductById = async (id: string): Promise<Product> => {
     return await response.json()
     */
   } catch (error) {
-    console.error("Error fetching product:", error)
-    throw error
+    console.error("Error fetching product:", error);
+    throw error;
   }
-}
+};
 
-export const getRelatedProducts = async (productId: string): Promise<RelatedProduct[]> => {
+export const getRelatedProducts = async (
+  productId: string
+): Promise<RelatedProduct[]> => {
   try {
     // For now, return mock data. Later you can replace with real API call
     const mockRelated: RelatedProduct[] = [
@@ -74,12 +58,12 @@ export const getRelatedProducts = async (productId: string): Promise<RelatedProd
         discount: true,
         favorite: true,
       },
-    ]
+    ];
 
     // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300))
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
-    return mockRelated
+    return mockRelated;
 
     // When ready to use real API, uncomment this:
     /*
@@ -90,10 +74,10 @@ export const getRelatedProducts = async (productId: string): Promise<RelatedProd
     return await response.json()
     */
   } catch (error) {
-    console.error("Error fetching related products:", error)
-    throw error
+    console.error("Error fetching related products:", error);
+    throw error;
   }
-}
+};
 
 export const addToFavorites = async (productId: string): Promise<void> => {
   try {
@@ -101,23 +85,26 @@ export const addToFavorites = async (productId: string): Promise<void> => {
       method: "POST",
       body: JSON.stringify({ productId }),
       skipAuth: false, // Requires authentication
-    })
-    return await response.json()
+    });
+    return await response.json();
   } catch (error) {
-    console.error("Error adding to favorites:", error)
-    throw error
+    console.error("Error adding to favorites:", error);
+    throw error;
   }
-}
+};
 
 export const removeFromFavorites = async (productId: string): Promise<void> => {
   try {
-    const response = await fetchInterceptor(`${API_URL}/api/favorites/${productId}`, {
-      method: "DELETE",
-      skipAuth: false, // Requires authentication
-    })
-    return await response.json()
+    const response = await fetchInterceptor(
+      `${API_URL}/api/favorites/${productId}`,
+      {
+        method: "DELETE",
+        skipAuth: false, // Requires authentication
+      }
+    );
+    return await response.json();
   } catch (error) {
-    console.error("Error removing from favorites:", error)
-    throw error
+    console.error("Error removing from favorites:", error);
+    throw error;
   }
-}
+};

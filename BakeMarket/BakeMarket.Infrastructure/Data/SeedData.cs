@@ -203,8 +203,13 @@ namespace BakeMarket.Infrastructure.Data
             {
                 var bakeries = new List<Bakery>
         {
-            new Bakery { Name = "Tiệm Bánh Ngọt Banana", Address = "123 Đường Tran Phu, Da Nang", OwnerId = owners[0].Id, PhoneNumber = owners[0].PhoneNumber },
-            new Bakery { Name = "Tiệm Bánh Nonstop", Address = "456 Đường Dien Bien Phu, Da Nang", OwnerId = owners[1].Id, PhoneNumber = owners[1].PhoneNumber }
+            new Bakery { Name = "Tiệm Bánh Ngọt Banana", 
+                Address = "123 Tran Phu, Da Nang", 
+                OwnerId = owners[0].Id, 
+                PhoneNumber = owners[0].PhoneNumber ,
+                LogoImageUrl = "",
+                CoverImageUrl = "BakeMarket/Bakery/ffc858c0-47c6-46cd-990b-721dc85e7a97_vn-11134513-7r98o-lua6940bg9w134@resize_ss1242x600!@crop_w1242_h600_cT.jpg"},
+            new Bakery { Name = "Tiệm Bánh Nonstop", Address = "456 Dien Bien Phu, Da Nang", OwnerId = owners[1].Id, PhoneNumber = owners[1].PhoneNumber }
         };
 
                 dbContext.Bakeries.AddRange(bakeries);

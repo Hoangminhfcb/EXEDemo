@@ -41,5 +41,16 @@ namespace BakeMarket.Infrastructure.Repositories
                 .Include(r => r.BakeryReviews)
                 .FirstOrDefaultAsync(b => b.OwnerId == userId, cancellationToken);
         }
+
+        public override async Task<Bakery?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await context.Bakeries
+                .Include(u => u.Owner)
+                .Include(c => c.Cakes)
+                .Include(b => b.Images)
+                .Include(o => o.Orders)
+                .Include(r => r.BakeryReviews)
+                .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
+        }
     }
 }

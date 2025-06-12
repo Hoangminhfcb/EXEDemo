@@ -30,7 +30,6 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("Cart items:", isOpen);
   // Mock cart data - in real app, this would come from context/state management
   useEffect(() => {
     const mockCartItems: CartItem[] = [
@@ -152,7 +151,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
-          onClick={() => console.log("Overlay clicked")}
+          onClick={onClose}
         />
       )}
 

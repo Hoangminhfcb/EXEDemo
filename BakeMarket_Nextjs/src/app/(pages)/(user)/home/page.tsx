@@ -174,60 +174,6 @@ export default function CakeEcommerceLanding() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
-              Thư Viện Của Chúng Tôi
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Duyệt qua bộ sưu tập những chiếc bánh đẹp mắt của chúng tôi
-            </p>
-          </div>
-
-          {/* Masonry-style Gallery with Horizontal Scroll */}
-          <div className="relative">
-            <div
-              className="flex overflow-x-auto scrollbar-hide gap-4 pb-4"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-                <div key={item} className="flex-none">
-                  <div
-                    className={`relative overflow-hidden rounded-lg cursor-pointer group ${
-                      item % 3 === 0
-                        ? "w-64 h-80"
-                        : item % 2 === 0
-                        ? "w-48 h-64"
-                        : "w-56 h-72"
-                    }`}
-                  >
-                    <Image
-                      src={`/placeholder.svg?height=${
-                        item % 3 === 0 ? 320 : item % 2 === 0 ? 256 : 288
-                      }&width=${
-                        item % 3 === 0 ? 256 : item % 2 === 0 ? 192 : 224
-                      }`}
-                      alt={`Gallery image ${item}`}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="font-medium">Custom Design</p>
-                      <p className="text-sm text-white/80">
-                        Premium Collection
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Categories Scroll Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -249,12 +195,13 @@ export default function CakeEcommerceLanding() {
                 {
                   name: "Bánh Cưới",
                   count: "24 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
+                  image:
+                    "/20250611_1925_Bánh Cưới_simple_compose_01jxff5tbaefj84t3zabsbcwh1.png",
                 },
                 {
                   name: "Bánh Sinh Nhật",
                   count: "36 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
+                  image: "/birthday_cake.jpg",
                 },
                 {
                   name: "Thiết Kế Riêng",
@@ -339,9 +286,6 @@ export default function CakeEcommerceLanding() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

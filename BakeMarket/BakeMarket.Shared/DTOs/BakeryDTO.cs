@@ -22,6 +22,7 @@ namespace BakeMarket.Shared.DTOs
         public string BusinessHours { get; set; }
         public double AverageRating { get; set; }
         public int TotalReviews { get; set; }
+        public int TotalProduct { get; set; }
         public UserDTO? Owner { get; set; }
         public ICollection<BakeryImage>? Images { get; set; }
     }

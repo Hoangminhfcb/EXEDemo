@@ -62,7 +62,7 @@ export const loginUser = async (
 };
 
 export const logoutUser = async (accessToken: string): Promise<void> => {
-  await fetchInterceptor(`${API_URL}/identity/api/v1/auth/logout`, {
+  await fetchInterceptor(`${API_URL}/api/auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -25,6 +25,9 @@ namespace BakeMarket.Domain.Entities
         public bool IsActive { get; set; } = true;
         public bool IsVerified { get; set; } = false;
 
+        public int TotalProduct => Cakes?.Count ?? 0;
+        public int TotalOrder => Orders?.Count ?? 0;
+
         // Business hours
         [MaxLength(500)]
         public string BusinessHours { get; set; } = string.Empty; // JSON format

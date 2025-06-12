@@ -37,6 +37,14 @@ namespace BakeMarket.API.Controllers
             return Ok(_mapper.Map<IEnumerable<BakeryDTO>>(bakeries));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BakeryDTO>> GetBakerie(Guid id)
+        {
+            var bakery = await _bakeryService.GetByIdAsync(id);
+
+            return Ok(_mapper.Map<BakeryDTO>(bakery));
+        }
+
         //[Authorize(Roles = "BakeryOwner")]
         // GET: api/Bakeries/5
         [HttpGet("MyBakery")]

@@ -21,5 +21,10 @@ namespace BakeMarket.Application.Services
         {
             return await _bakeryRepository.GetByUserIdAsync(userId, cancellationToken);
         }
+
+        public override async Task<Bakery?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await _bakeryRepository.GetByIdAsync(id, cancellationToken);
+        }
     }
 }

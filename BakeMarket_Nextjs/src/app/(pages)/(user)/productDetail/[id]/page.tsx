@@ -1,78 +1,94 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { use } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { FaHeart, FaMapMarkerAlt, FaShoppingCart, FaMinus, FaPlus, FaArrowLeft } from "react-icons/fa"
-import { getProductById, getRelatedProducts, addToFavorites, removeFromFavorites } from "@/services/cakeDetailService"
-  // @ts-expect-error
-import type { Product, RelatedProduct } from "@/types/product"
+import { useState, useEffect } from "react";
+import { use } from "react";
+import Link from "next/link";
+import {
+  FaHeart,
+  FaMapMarkerAlt,
+  FaShoppingCart,
+  FaMinus,
+  FaPlus,
+  FaArrowLeft,
+} from "react-icons/fa";
+import {
+  getProductById,
+  getRelatedProducts,
+  addToFavorites,
+  removeFromFavorites,
+} from "@/services/cakeDetailService";
+// @ts-expect-error
+import type { Product, RelatedProduct } from "@/types/product";
+import { PageProps } from "@/types/ResponseData";
+import { API_URL } from "@/utils/BaseUrl";
 
+export default function ProductDetail({ params }: PageProps) {
+  const resolvedParams = use(params);
+  const productId = resolvedParams.id;
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  // @ts-expect-error
-  const unwrappedParams = use(params)
-    // @ts-expect-error
-  const productId = unwrappedParams.id
-
-  const [activeImage, setActiveImage] = useState(0)
-  const [quantity, setQuantity] = useState(1)
-  const [isFavorite, setIsFavorite] = useState(false)
-  const [product, setProduct] = useState<Product | null>(null)
-  const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [activeImage, setActiveImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
         // Fetch product and related products in parallel
-        const [productData, relatedData] = await Promise.all([getProductById(productId), getRelatedProducts(productId)])
+        const [productData, relatedData] = await Promise.all([
+          getProductById(productId),
+          getRelatedProducts(productId),
+        ]);
 
-        setProduct(productData)
-        setRelatedProducts(relatedData)
-        setIsFavorite(productData.favorite)
+        setProduct(productData);
+        setRelatedProducts(relatedData);
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Đã xảy ra lỗi khi tải dữ liệu"
-        setError(errorMessage)
-        console.error("Error fetching data:", err)
+        const errorMessage =
+          err instanceof Error ? err.message : "Đã xảy ra lỗi khi tải dữ liệu";
+        setError(errorMessage);
+        console.error("Error fetching data:", err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [productId])
+    fetchData();
+  }, [productId]);
 
   const handleFavoriteToggle = async () => {
     try {
       if (isFavorite) {
-        await removeFromFavorites(productId)
+        await removeFromFavorites(productId);
       } else {
-        await addToFavorites(productId)
+        await addToFavorites(productId);
       }
-      setIsFavorite(!isFavorite)
+      setIsFavorite(!isFavorite);
     } catch (error) {
-      console.error("Error toggling favorite:", error)
+      console.error("Error toggling favorite:", error);
       // You might want to show a toast notification here
     }
-  }
+  };
 
   const handleQuantityChange = (type: "increase" | "decrease") => {
     if (type === "decrease" && quantity > 1) {
-      setQuantity(quantity - 1)
+      setQuantity(quantity - 1);
     } else if (type === "increase") {
-      setQuantity(quantity + 1)
+      setQuantity(quantity + 1);
     }
-  }
+  };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(price)
-  }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
 
   if (loading) {
     return (
@@ -85,7 +101,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         </div>
         {/* <Footer /> */}
       </div>
-    )
+    );
   }
 
   if (error || !product) {
@@ -95,8 +111,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         <Header /> */}
         <div className="container mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <h3 className="text-lg font-medium text-red-800 mb-2">Không tìm thấy sản phẩm</h3>
-            <p className="text-red-700 mb-4">{error || "Sản phẩm không tồn tại hoặc đã bị xóa"}</p>
+            <h3 className="text-lg font-medium text-red-800 mb-2">
+              Không tìm thấy sản phẩm
+            </h3>
+            <p className="text-red-700 mb-4">
+              {error || "Sản phẩm không tồn tại hoặc đã bị xóa"}
+            </p>
             <Link
               href="/products"
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-600 hover:bg-pink-700"
@@ -107,7 +127,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         </div>
         {/* <Footer /> */}
       </div>
-    )
+    );
   }
 
   return (
@@ -130,7 +150,10 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         </div>
 
         {/* Back button for mobile */}
-        <Link href="/products" className="inline-flex items-center text-pink-600 mb-4 md:hidden">
+        <Link
+          href="/products"
+          className="inline-flex items-center text-pink-600 mb-4 md:hidden"
+        >
           <FaArrowLeft className="mr-2" /> Quay lại
         </Link>
 
@@ -138,8 +161,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           {/* Product Images */}
           <div className="space-y-4">
             <div className="relative rounded-lg overflow-hidden border border-gray-200">
-              <Image
-                src={product.images[activeImage] || "/placeholder.svg"}
+              <img
+                src={
+                  product?.images?.[activeImage]?.imageUrl
+                    ? `${API_URL}/api/images/file/${product.images[activeImage].imageUrl}`
+                    : `${API_URL}/api/images/file/${product?.thumbnailUrl}`
+                }
                 alt={product.name}
                 width={600}
                 height={600}
@@ -148,30 +175,29 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               <button
                 onClick={handleFavoriteToggle}
                 className={`absolute top-4 right-4 p-2 rounded-full ${
-                  isFavorite ? "bg-pink-600 text-white" : "bg-white text-gray-600"
+                  isFavorite
+                    ? "bg-pink-600 text-white"
+                    : "bg-white text-gray-600"
                 }`}
               >
                 <FaHeart />
               </button>
-              {product.discount && (
-                <div className="absolute top-4 left-4 bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  Giảm giá
-                </div>
-              )}
             </div>
 
             {/* Thumbnails */}
             <div className="flex space-x-2 overflow-x-auto pb-2">
-              {product.images.map((image: string, index: number) => (
+              {product.images.map((image: any, index: number) => (
                 <button
                   key={index}
                   onClick={() => setActiveImage(index)}
                   className={`flex-shrink-0 rounded-md overflow-hidden border-2 ${
-                    activeImage === index ? "border-pink-600" : "border-gray-200"
+                    activeImage === index
+                      ? "border-pink-600"
+                      : "border-gray-200"
                   }`}
                 >
-                  <Image
-                    src={image || "/placeholder.svg"}
+                  <img
+                    src={`${API_URL}/api/images/file/${image.imageUrl}`}
                     alt={`${product.name} - Ảnh ${index + 1}`}
                     width={80}
                     height={80}
@@ -191,7 +217,11 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 {[1, 2, 3, 4, 5].map((star) => (
                   <svg
                     key={star}
-                    className={`w-5 h-5 ${star <= Math.floor(product.rating) ? "text-yellow-400" : "text-gray-300"}`}
+                    className={`w-5 h-5 ${
+                      star <= Math.floor(product.averageRating)
+                        ? "text-yellow-400"
+                        : "text-gray-300"
+                    }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -199,25 +229,25 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                   </svg>
                 ))}
-                <span className="ml-2 text-gray-600">{product.rating}</span>
+                <span className="ml-2 text-gray-600">
+                  {product.averageRating}
+                </span>
               </div>
               <span className="text-gray-500">|</span>
-              <span className="text-gray-600">{product.reviewCount} đánh giá</span>
+              <span className="text-gray-600">
+                {product.totalReviews} đánh giá
+              </span>
             </div>
 
             <p className="text-gray-600 flex items-center">
-              <FaMapMarkerAlt className="mr-2 text-pink-600" /> {product.address}
+              <FaMapMarkerAlt className="mr-2 text-pink-600" />{" "}
+              {product.bakery?.name || "Cửa hàng bánh"} -{" "}
             </p>
 
             <div className="flex items-center space-x-4">
-              {product.discount && product.discountPrice ? (
-                <>
-                  <span className="text-3xl font-bold text-pink-600">{formatPrice(product.discountPrice)}</span>
-                  <span className="text-xl text-gray-500 line-through">{formatPrice(product.price)}</span>
-                </>
-              ) : (
-                <span className="text-3xl font-bold text-pink-600">{formatPrice(product.price)}</span>
-              )}
+              <span className="text-3xl font-bold text-pink-600">
+                {formatPrice(product.price)}
+              </span>
             </div>
 
             <div className="border-t border-b border-gray-200 py-6 space-y-6">
@@ -238,21 +268,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                   ))}
                 </div>
               </div> */}
-
-              <div>
-                <h3 className="text-lg font-medium mb-3">Hương vị</h3>
-                <div className="flex flex-wrap gap-2">
-                  {product.flavors.map((flavor: string, index: number) => (
-                    <label
-                      key={index}
-                      className="relative border border-gray-300 rounded-full px-4 py-2 cursor-pointer hover:border-pink-600 transition"
-                    >
-                      <input type="radio" name="flavor" className="absolute opacity-0" defaultChecked={index === 0} />
-                      <span className="text-sm">{flavor}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
 
               <div>
                 <h3 className="text-lg font-medium mb-3">Số lượng</h3>
@@ -289,7 +304,9 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             </div>
 
             <div className="bg-pink-50 rounded-lg p-4 text-sm">
-              <p className="font-medium text-pink-800 mb-2">Thông tin giao hàng:</p>
+              <p className="font-medium text-pink-800 mb-2">
+                Thông tin giao hàng:
+              </p>
               <ul className="space-y-1 text-pink-700">
                 <li>• Giao hàng miễn phí trong nội thành TP.HCM</li>
                 <li>• Đặt trước ít nhất 24 giờ</li>
@@ -303,14 +320,18 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6">Mô tả sản phẩm</h2>
           <div className="prose max-w-none">
-            <p className="text-gray-700 leading-relaxed">{product.description}</p>
-            <p className="text-gray-700 leading-relaxed mt-4">
-              Bánh được làm từ nguyên liệu cao cấp, đảm bảo vệ sinh an toàn thực phẩm. Quy trình sản xuất tuân thủ các
-              tiêu chuẩn nghiêm ngặt, mang đến sản phẩm chất lượng cao.
+            <p className="text-gray-700 leading-relaxed">
+              {product.description}
             </p>
             <p className="text-gray-700 leading-relaxed mt-4">
-              Khách hàng có thể yêu cầu tùy chỉnh thiết kế, màu sắc, kích thước và hương vị theo ý muốn. Vui lòng liên
-              hệ trước ít nhất 48 giờ để đảm bảo đáp ứng yêu cầu đặc biệt.
+              Bánh được làm từ nguyên liệu cao cấp, đảm bảo vệ sinh an toàn thực
+              phẩm. Quy trình sản xuất tuân thủ các tiêu chuẩn nghiêm ngặt, mang
+              đến sản phẩm chất lượng cao.
+            </p>
+            <p className="text-gray-700 leading-relaxed mt-4">
+              Khách hàng có thể yêu cầu tùy chỉnh thiết kế, màu sắc, kích thước
+              và hương vị theo ý muốn. Vui lòng liên hệ trước ít nhất 48 giờ để
+              đảm bảo đáp ứng yêu cầu đặc biệt.
             </p>
           </div>
         </div>
@@ -326,10 +347,13 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedProducts.map((relatedProduct) => (
-              <Link href={`/products/${relatedProduct.id}`} key={relatedProduct.id}>
+              <Link
+                href={`/products/${relatedProduct.id}`}
+                key={relatedProduct.id}
+              >
                 <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
                   <div className="relative">
-                    <Image
+                    <img
                       src={relatedProduct.image || "/placeholder.svg"}
                       width={400}
                       height={300}
@@ -339,7 +363,9 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                     <div className="absolute top-2 right-2">
                       <button
                         className={`p-2 rounded-full ${
-                          relatedProduct.favorite ? "bg-pink-600 text-white" : "bg-white text-gray-600"
+                          relatedProduct.favorite
+                            ? "bg-pink-600 text-white"
+                            : "bg-white text-gray-600"
                         }`}
                       >
                         <FaHeart />
@@ -347,9 +373,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-lg mb-1">{relatedProduct.name}</h3>
+                    <h3 className="font-semibold text-lg mb-1">
+                      {relatedProduct.name}
+                    </h3>
                     <p className="text-gray-600 text-sm flex items-center mb-3">
-                      <FaMapMarkerAlt className="mr-1" /> {relatedProduct.address}
+                      <FaMapMarkerAlt className="mr-1" />{" "}
+                      {relatedProduct.address}
                     </p>
                     {relatedProduct.discount && (
                       <p className="text-pink-600 flex items-center text-sm">
@@ -378,5 +407,5 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
       {/* <Footer /> */}
     </div>
-  )
+  );
 }
