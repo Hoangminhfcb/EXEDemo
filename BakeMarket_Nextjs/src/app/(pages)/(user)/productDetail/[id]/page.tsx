@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { use } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   FaHeart,
@@ -17,14 +18,17 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "@/services/cakeDetailService";
+import { addToCart } from "@/utils/cartStorage";
+import { useCart } from "@/context/CartContext";
 // @ts-expect-error
 import type { Product, RelatedProduct } from "@/types/product";
-import { PageProps } from "@/types/ResponseData";
 import { API_URL } from "@/utils/BaseUrl";
 
-export default function ProductDetail({ params }: PageProps) {
-  const resolvedParams = use(params);
-  const productId = resolvedParams.id;
+export default function ProductDetail({ params }: { params: { id: string } }) {
+  // @ts-expect-error
+  const unwrappedParams = use(params);
+  // @ts-expect-error
+  const productId = unwrappedParams.id;
 
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -33,6 +37,12 @@ export default function ProductDetail({ params }: PageProps) {
   const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { setCartItems } = useCart();
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [selectedFlavor, setSelectedFlavor] = useState(
+    product?.flavors?.[0] || ""
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +58,8 @@ export default function ProductDetail({ params }: PageProps) {
 
         setProduct(productData);
         setRelatedProducts(relatedData);
+        setIsFavorite(productData.favorite);
+        setSelectedFlavor(productData.flavors?.[0] || ""); // Add this line
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Đã xảy ra lỗi khi tải dữ liệu";
@@ -80,6 +92,44 @@ export default function ProductDetail({ params }: PageProps) {
       setQuantity(quantity - 1);
     } else if (type === "increase") {
       setQuantity(quantity + 1);
+    }
+  };
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    setIsAddingToCart(true);
+
+    try {
+      const success = addToCart(
+        {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          discountPrice: product.discountPrice,
+          images: product.images,
+          bakeryName: product.bakeryName || "Tiệm bánh",
+          bakeryId: product.bakeryId || "1",
+        },
+        quantity,
+        {
+          flavor: selectedFlavor,
+        }
+      );
+
+      if (success) {
+        // Update cart context
+        const { getCart } = await import("@/utils/cartStorage");
+        const updatedCart = getCart();
+        setCartItems(updatedCart);
+
+        // Optional: Show success message or toast
+        console.log("Đã thêm vào giỏ hàng!");
+      }
+    } catch (error) {
+      console.error("Lỗi khi thêm vào giỏ hàng:", error);
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
@@ -270,6 +320,31 @@ export default function ProductDetail({ params }: PageProps) {
               </div> */}
 
               <div>
+                <h3 className="text-lg font-medium mb-3">Hương vị</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.flavors.map((flavor: string, index: number) => (
+                    <label
+                      key={index}
+                      className={`relative border rounded-full px-4 py-2 cursor-pointer transition ${
+                        selectedFlavor === flavor
+                          ? "border-pink-600 bg-pink-50 text-pink-600"
+                          : "border-gray-300 hover:border-pink-600"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="flavor"
+                        className="absolute opacity-0"
+                        checked={selectedFlavor === flavor}
+                        onChange={() => setSelectedFlavor(flavor)}
+                      />
+                      <span className="text-sm">{flavor}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
                 <h3 className="text-lg font-medium mb-3">Số lượng</h3>
                 <div className="flex items-center">
                   <button
@@ -295,8 +370,21 @@ export default function ProductDetail({ params }: PageProps) {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="flex-1 bg-pink-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-pink-700 transition flex items-center justify-center">
-                <FaShoppingCart className="mr-2" /> Thêm vào giỏ hàng
+              <button
+                onClick={handleAddToCart}
+                disabled={isAddingToCart}
+                className="flex-1 bg-pink-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-pink-700 transition flex items-center justify-center disabled:opacity-50"
+              >
+                {isAddingToCart ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Đang thêm...
+                  </>
+                ) : (
+                  <>
+                    <FaShoppingCart className="mr-2" /> Thêm vào giỏ hàng
+                  </>
+                )}
               </button>
               <button className="flex-1 border border-pink-600 text-pink-600 py-3 px-6 rounded-lg font-medium hover:bg-pink-50 transition">
                 Mua ngay
