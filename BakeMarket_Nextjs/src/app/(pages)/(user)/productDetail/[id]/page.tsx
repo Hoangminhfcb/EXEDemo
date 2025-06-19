@@ -23,26 +23,25 @@ import { useCart } from "@/context/CartContext";
 // @ts-expect-error
 import type { Product, RelatedProduct } from "@/types/product";
 import { API_URL } from "@/utils/BaseUrl";
+import { getCakes } from "@/services/bakeryService";
+import { PageProps } from "@/types/ResponseData";
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  // @ts-expect-error
-  const unwrappedParams = use(params);
-  // @ts-expect-error
-  const productId = unwrappedParams.id;
+export default function ProductDetail({ params }: PageProps) {
+  const productId = use(params).id;
 
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const { setCartItems } = useCart();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [selectedFlavor, setSelectedFlavor] = useState(
-    product?.flavors?.[0] || ""
-  );
+  // const [selectedFlavor, setSelectedFlavor] = useState(
+  //   product?.flavors?.[0] || ""
+  // );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,13 +52,13 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         // Fetch product and related products in parallel
         const [productData, relatedData] = await Promise.all([
           getProductById(productId),
-          getRelatedProducts(productId),
+          getCakes,
         ]);
 
         setProduct(productData);
-        setRelatedProducts(relatedData);
-        setIsFavorite(productData.favorite);
-        setSelectedFlavor(productData.flavors?.[0] || ""); // Add this line
+        setRelatedProducts(await relatedData());
+        // setIsFavorite(productData.favorite);
+        // setSelectedFlavor(productData.flavors?.[0] || ""); // Add this line
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Đã xảy ra lỗi khi tải dữ liệu";
@@ -106,15 +105,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           id: product.id,
           name: product.name,
           price: product.price,
-          discountPrice: product.discountPrice,
-          images: product.images,
-          bakeryName: product.bakeryName || "Tiệm bánh",
-          bakeryId: product.bakeryId || "1",
+
+          image: product.thumbnailUrl,
+          bakeryName: product.bakery?.name,
+          bakeryId: product.bakery?.id,
         },
-        quantity,
-        {
-          flavor: selectedFlavor,
-        }
+        quantity
       );
 
       if (success) {
@@ -319,7 +315,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 </div>
               </div> */}
 
-              <div>
+              {/* <div>
                 <h3 className="text-lg font-medium mb-3">Hương vị</h3>
                 <div className="flex flex-wrap gap-2">
                   {product.flavors.map((flavor: string, index: number) => (
@@ -342,7 +338,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                     </label>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <h3 className="text-lg font-medium mb-3">Số lượng</h3>
@@ -396,7 +392,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 Thông tin giao hàng:
               </p>
               <ul className="space-y-1 text-pink-700">
-                <li>• Giao hàng miễn phí trong nội thành TP.HCM</li>
+                <li>• Giao hàng miễn phí trong nội thành TP.Đà Nẵng</li>
                 <li>• Đặt trước ít nhất 24 giờ</li>
                 <li>• Hỗ trợ giao hàng từ 8:00 - 21:00 hàng ngày</li>
               </ul>
@@ -434,7 +430,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedProducts.map((relatedProduct) => (
+            {relatedProducts.slice(0, 3).map((relatedProduct) => (
               <Link
                 href={`/products/${relatedProduct.id}`}
                 key={relatedProduct.id}
@@ -442,7 +438,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
                   <div className="relative">
                     <img
-                      src={relatedProduct.image || "/placeholder.svg"}
+                      src={`${API_URL}/api/images/file/${relatedProduct.thumbnailUrl}`}
                       width={400}
                       height={300}
                       alt={relatedProduct.name}
@@ -466,25 +462,8 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                     </h3>
                     <p className="text-gray-600 text-sm flex items-center mb-3">
                       <FaMapMarkerAlt className="mr-1" />{" "}
-                      {relatedProduct.address}
+                      {relatedProduct.bakery?.address}
                     </p>
-                    {relatedProduct.discount && (
-                      <p className="text-pink-600 flex items-center text-sm">
-                        <svg
-                          className="w-4 h-4 mr-1"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                        Giảm giá đặc biệt
-                      </p>
-                    )}
                   </div>
                 </div>
               </Link>

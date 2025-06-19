@@ -8,10 +8,16 @@ export default function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
+              <div className="w-15 h-15 bg-pink-600 rounded-full overflow-hidden flex items-center justify-center">
+                <img
+                  src="/489729664_1044120057678678_3768152540585589613_n.jpg"
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span className="text-xl font-bold">PEU D AMOUR</span>
+              <span className="text-xl font-bold text-white-900">
+                PEU D AMOUR
+              </span>
             </div>
             <p className="text-gray-400 leading-relaxed mb-6">
               Tạo ra những chiếc bánh đẹp mắt, thơm ngon cho những khoảnh khắc

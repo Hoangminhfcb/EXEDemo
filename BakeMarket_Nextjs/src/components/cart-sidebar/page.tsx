@@ -12,6 +12,7 @@ import {
   getCartSummary,
   type CartItem,
 } from "@/utils/cartStorage";
+import { API_URL } from "@/utils/BaseUrl";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -105,7 +106,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
       {/* Sidebar */}
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? "translate-x-0" : "translate-x-full hidden"
         }`}
       >
         <div className="flex flex-col h-full">
@@ -168,7 +169,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
                 {/* Grouped by Bakery */}
                 <div className="space-y-6">
-                  {Object.values(groupedItems).map((group) => (
+                  {Object.values(groupedItems as any).map((group: any) => (
                     <div
                       key={group.bakeryId}
                       className="border border-gray-200 rounded-lg p-4"
@@ -189,7 +190,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
                       {/* Items from this bakery */}
                       <div className="space-y-4">
-                        {group.items.map((item) => (
+                        {group.items.map((item: any) => (
                           <div key={item.id} className="space-y-3">
                             {/* Product Header with Image and Name */}
                             <div className="flex items-start space-x-3">
@@ -199,10 +200,9 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                 onClick={onClose}
                               >
                                 <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200">
-                                  <Image
-                                    src={item.image || "/placeholder.svg"}
+                                  <img
+                                    src={`${API_URL}/api/images/file/${item?.image}`}
                                     alt={item.name}
-                                    fill
                                     className="object-cover"
                                   />
                                 </div>

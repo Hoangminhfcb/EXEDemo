@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bake Market</string>
+
+    <!-- Main Activity -->
+    <string name="main_title">E-Shop</string>
+    <string name="menu_cart">Giỏ hàng</string>
+    <string name="menu_search">Tìm kiếm</string>
+    <string name="menu_profile">Tài khoản</string>
+
+    <!-- Product Detail -->
+    <string name="product_detail_title">Chi tiết sản phẩm</string>
+    <string name="product_description_label">Mô tả sản phẩm:</string>
+    <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="added_to_cart">Đã thêm vào giỏ hàng</string>
+
+    <!-- Cart -->
+    <string name="cart_title">Giỏ hàng</string>
+    <string name="cart_empty">Giỏ hàng trống</string>
+    <string name="total_price">Tổng cộng: %s</string>
+    <string name="checkout">Thanh toán</string>
+    <string name="checkout_success">Đặt hàng thành công!</string>
+    <string name="remove">Xóa</string>
+    <string name="quantity">Số lượng</string>
+    <string name="total">Tổng: %s</string>
+
+    <!-- Common -->
+    <string name="price_format">%,d VNĐ</string>
+    <string name="loading">Đang tải...</string>
+    <string name="error">Có lỗi xảy ra</string>
+    <string name="retry">Thử lại</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Hủy</string>
+
+    <!-- Validation -->
+    <string name="field_required">Trường này là bắt buộc</string>
+    <string name="invalid_email">Email không hợp lệ</string>
+    <string name="password_too_short">Mật khẩu quá ngắn</string>
+
+    <!-- Network -->
+    <string name="no_internet">Không có kết nối internet</string>
+    <string name="server_error">Lỗi server</string>
+    <string name="connection_timeout">Kết nối timeout</string>
+</resources>

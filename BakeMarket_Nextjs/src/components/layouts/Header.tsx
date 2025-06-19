@@ -10,6 +10,7 @@ import { logoutUser, verifyToken } from "@/services/authService";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/redux/slices/authSlice";
+import { useCart } from "@/context/CartContext";
 
 export default function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -17,6 +18,10 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { cartItems } = useCart();
+  const totalUniqueProducts = new Set(
+    cartItems.map((item: { id: string }) => item.id)
+  ).size;
 
   useEffect(() => {
     const validateAuth = async () => {
@@ -64,8 +69,12 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">A</span>
+            <div className="w-20 h-10 bg-pink-600 rounded-full overflow-hidden flex items-center justify-center">
+              <img
+                src="/489729664_1044120057678678_3768152540585589613_n.jpg"
+                alt=""
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-xl font-bold text-gray-900">PEU D AMOUR</span>
           </Link>
@@ -78,18 +87,7 @@ export default function Header() {
             >
               Sản Phẩm
             </Link>
-            <Link
-              href="/categories"
-              className="text-gray-700 hover:text-pink-600 transition-colors"
-            >
-              Danh Mục
-            </Link>
-            <Link
-              href="/custom"
-              className="text-gray-700 hover:text-pink-600 transition-colors"
-            >
-              Đặt Hàng Riêng
-            </Link>
+
             <Link
               href="/bakery"
               className="text-gray-700 hover:text-pink-600 transition-colors"
@@ -97,10 +95,10 @@ export default function Header() {
               Tiệm Bánh
             </Link>
             <Link
-              href="/contact"
+              href="/checkout/tracking"
               className="text-gray-700 hover:text-pink-600 transition-colors"
             >
-              Giới Thiệu
+              Đơn Hàng
             </Link>
           </nav>
 
@@ -161,7 +159,7 @@ export default function Header() {
             >
               <ShoppingCart className="h-4 w-4" />
               <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                2
+                {totalUniqueProducts}
               </span>
             </Button>
             <Button variant="ghost" size="sm" className="md:hidden">

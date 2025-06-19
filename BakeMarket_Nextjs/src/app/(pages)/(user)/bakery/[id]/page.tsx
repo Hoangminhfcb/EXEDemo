@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { use } from "react";
-import Image from "next/image";
+
 import Link from "next/link";
 import {
   FaMapMarkerAlt,
@@ -91,7 +91,8 @@ export default function BakeryPage({ params }: PageProps) {
       {
         id: 1,
         customerName: "Nguyễn Văn A",
-        avatar: "/api/placeholder/50/50",
+        avatar:
+          "BakeMarket/Avatar/cb6282e1-f190-4130-bab8-111f7873060c_download.jpg",
         rating: 5,
         comment: "Bánh rất ngon và đẹp mắt. Dịch vụ tuyệt vời!",
         date: "2024-01-15",
@@ -100,7 +101,8 @@ export default function BakeryPage({ params }: PageProps) {
       {
         id: 2,
         customerName: "Trần Thị B",
-        avatar: "/api/placeholder/50/50",
+        avatar:
+          "BakeMarket/Avatar/cb6282e1-f190-4130-bab8-111f7873060c_download.jpg",
         rating: 5,
         comment: "Bánh cưới của tôi rất hoàn hảo. Cảm ơn Sweet Dreams!",
         date: "2024-01-10",
@@ -109,7 +111,8 @@ export default function BakeryPage({ params }: PageProps) {
       {
         id: 3,
         customerName: "Lê Văn C",
-        avatar: "/api/placeholder/50/50",
+        avatar:
+          "BakeMarket/Avatar/cb6282e1-f190-4130-bab8-111f7873060c_download.jpg",
         rating: 4,
         comment: "Chất lượng tốt, giao hàng đúng giờ.",
         date: "2024-01-08",
@@ -143,12 +146,10 @@ export default function BakeryPage({ params }: PageProps) {
     <div className="min-h-screen bg-gray-50">
       {/* Cover Image */}
       <div className="relative h-64 md:h-80">
-        <Image
+        <img
           src={`${API_URL}/api/images/file/${bakery.coverImageUrl}`}
           alt={bakery.name}
-          fill
-          className="object-cover"
-          priority
+          className="w-full h-full object-cover rounded-b-lg"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
@@ -177,12 +178,11 @@ export default function BakeryPage({ params }: PageProps) {
           <div className="flex flex-col md:flex-row">
             {/* Logo */}
             <div className="md:mr-6 mb-4 md:mb-0 flex justify-center md:block">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                <Image
-                  src={`${API_URL}/api/images/file/${bakery.coverImageUrl}`}
+              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                <img
+                  src={`${API_URL}/api/images/file/${bakery.logoImageUrl}`}
                   alt={`${bakery.name} logo`}
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -283,7 +283,9 @@ export default function BakeryPage({ params }: PageProps) {
           <div className="bg-white rounded-lg shadow-sm p-4 text-center">
             <FaShoppingCart className="text-green-600 text-2xl mx-auto mb-2" />
             <div className="text-2xl font-bold text-gray-900">
-              {bakery.totalOrder}
+              {bakery.totalOrder !== undefined && bakery.totalOrder !== null
+                ? bakery.totalOrder.toString()
+                : "0"}
             </div>
             <div className="text-sm text-gray-600">Đơn hàng</div>
           </div>
@@ -307,7 +309,7 @@ export default function BakeryPage({ params }: PageProps) {
         )}
 
         {activeTab === "products" && bakery.id && (
-          <AllProducts bakeryId={bakery.id} />
+          <AllProducts bakeryId={bakery.id} isOwner={isOwner} />
         )}
 
         {activeTab === "reviews" && (
@@ -323,10 +325,9 @@ export default function BakeryPage({ params }: PageProps) {
                 >
                   <div className="flex items-start">
                     <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <Image
-                        src={review.avatar || "/placeholder.svg"}
+                      <img
+                        src={`${API_URL}/api/images/file/${review.avatar}`}
                         alt={review.customerName}
-                        fill
                         className="object-cover"
                       />
                     </div>

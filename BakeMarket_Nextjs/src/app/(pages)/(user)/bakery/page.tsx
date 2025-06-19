@@ -56,9 +56,9 @@ export default function LocationsPage() {
 
   // Separate bakeries by type
   const premiumBakery = filteredBakeries.find((bakery) => bakery.isActive);
-  const featuredBakeries = filteredBakeries
-    .filter((bakery) => bakery.isActive && !bakery.isVerified)
-    .slice(0, 2);
+  const featuredBakeries = filteredBakeries.filter(
+    (bakery) => bakery.isActive && !bakery.isVerified
+  );
   const regularBakeries = filteredBakeries.filter(
     (bakery) => !bakery.isVerified && !bakery.isActive
   );
@@ -97,7 +97,7 @@ export default function LocationsPage() {
     >
       <div className="relative">
         <img
-          src={`${API_URL}/api/images/file/${bakery.coverImageUrl}`}
+          src={`${API_URL}/api/images/file/${bakery.logoImageUrl}`}
           width={400}
           height={250}
           alt={bakery.name}
@@ -281,7 +281,7 @@ export default function LocationsPage() {
                     <div className="md:w-1/2 mb-4 md:mb-0">
                       <div className="relative rounded-lg overflow-hidden">
                         <img
-                          src={`${API_URL}/api/images/file/${premiumBakery.coverImageUrl}`}
+                          src={`${API_URL}/api/images/file/${premiumBakery.logoImageUrl}`}
                           width={600}
                           height={400}
                           alt={premiumBakery.name}
@@ -384,7 +384,7 @@ export default function LocationsPage() {
                 <h2 className="text-xl font-semibold mb-4 flex items-center">
                   <FaStar className="text-pink-500 mr-2" /> Cửa hàng nổi bật
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                   {featuredBakeries.map((bakery) => (
                     <div key={bakery.id}>
                       <BakeryCard
@@ -443,14 +443,13 @@ export default function LocationsPage() {
           <div className="md:flex">
             {/* Left side - Image */}
             <div className="md:w-2/5 relative">
-              <Image
-                src="/api/placeholder/800/600"
+              <img
+                src="/photo-5-16497648995771561094574.jpg"
                 width={800}
                 height={600}
                 alt="Become a Partner Bakery"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-600/30 to-yellow-500/30"></div>
             </div>
 
             {/* Right side - Content */}
