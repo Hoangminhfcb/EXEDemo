@@ -17,7 +17,7 @@ services:
 
   bakemarket-api:
     build:
-      context: ./BakeMarket
+      context: ./BakeMarket_DotNet
       dockerfile: BakeMarket.API/Dockerfile
       args:
         ENVIRONMENT: Production
@@ -35,7 +35,7 @@ services:
       context: ./BakeMarket_Nextjs
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: "http://localhost:5000"
+        NEXT_PUBLIC_API_URL: "https://api.zanis.id.vn"
     image: bakemarket-nextjs
     depends_on:
       - bakemarket-api

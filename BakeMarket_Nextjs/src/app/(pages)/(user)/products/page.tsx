@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   FaSearch,
@@ -375,7 +374,7 @@ export default function ProductsPage() {
                       className="block"
                     >
                       <div className="relative">
-                        <Image
+                        <img
                           src={`${API_URL}/api/images/file/${product.thumbnailUrl}`}
                           width={400}
                           height={300}

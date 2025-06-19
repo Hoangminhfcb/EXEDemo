@@ -16,7 +16,6 @@ const NavigationTabs = ({ activeTab, setActiveTab }: NavigationTabsProps) => {
     { id: "overview", name: "Tổng quan", icon: <FaEye /> },
     { id: "products", name: "Sản phẩm", icon: <FaShoppingCart /> },
     { id: "reviews", name: "Đánh giá", icon: <FaStar /> },
-    { id: "gallery", name: "Thư viện", icon: <FaHeart /> },
     { id: "contact", name: "Liên hệ", icon: <FaPhone /> },
   ];
 

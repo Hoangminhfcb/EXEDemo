@@ -21,6 +21,8 @@ export interface Bakery {
   businessHours: string;
   averageRating: number;
   totalReviews: number;
-  images: string[];
+  images?: string[];
   owner: OwnerProfile;
+  totalProducts: number;
+  totalOrder: number;
 }

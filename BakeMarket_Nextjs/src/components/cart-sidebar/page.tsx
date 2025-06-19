@@ -1,102 +1,112 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { X, Plus, Minus, Trash2, ShoppingCart, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useCart } from "@/context/CartContext"
-import { updateCartItemQuantity, removeCartItem, getCartSummary, type CartItem } from "@/utils/cartStorage"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { X, Plus, Minus, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
+import {
+  updateCartItemQuantity,
+  removeCartItem,
+  getCartSummary,
+  type CartItem,
+} from "@/utils/cartStorage";
+import { API_URL } from "@/utils/BaseUrl";
 
 interface CartSidebarProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
-  const { cartItems, setCartItems, clearCartItems } = useCart()
-  const [isLoading, setIsLoading] = useState(false)
+  const { cartItems, setCartItems, clearCartItems } = useCart();
+  const [isLoading, setIsLoading] = useState(false);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
-    }).format(price)
-  }
+    }).format(price);
+  };
 
   const updateQuantity = (itemId: string, newQuantity: number) => {
-    if (newQuantity < 1) return
+    if (newQuantity < 1) return;
 
-    const success = updateCartItemQuantity(itemId, newQuantity)
+    const success = updateCartItemQuantity(itemId, newQuantity);
     if (success) {
       // Update the context state to trigger re-render
-      const updatedItems = cartItems.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item))
-      setCartItems(updatedItems)
+      const updatedItems = cartItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      );
+      setCartItems(updatedItems);
     }
-  }
+  };
 
   const removeItem = (itemId: string) => {
-    const success = removeCartItem(itemId)
+    const success = removeCartItem(itemId);
     if (success) {
       // Update the context state to trigger re-render
-      const updatedItems = cartItems.filter((item) => item.id !== itemId)
-      setCartItems(updatedItems)
+      const updatedItems = cartItems.filter((item) => item.id !== itemId);
+      setCartItems(updatedItems);
     }
-  }
+  };
 
   const clearCart = () => {
-    clearCartItems()
-  }
+    clearCartItems();
+  };
 
   // Use cart summary from utilities
-  const cartSummary = getCartSummary()
-  const { totalItems, subtotal, deliveryFee, total } = cartSummary
+  const cartSummary = getCartSummary();
+  const { totalItems, subtotal, deliveryFee, total } = cartSummary;
 
   const getItemPrice = (item: CartItem) => {
-    return item.discountPrice || item.price
-  }
+    return item.discountPrice || item.price;
+  };
 
   const getItemTotal = (item: CartItem) => {
-    return getItemPrice(item) * item.quantity
-  }
+    return getItemPrice(item) * item.quantity;
+  };
 
   // Group items by bakery
-  const groupedItems = cartItems.reduce(
-    (groups, item) => {
-      const bakeryId = item.bakeryId
-      if (!groups[bakeryId]) {
-        groups[bakeryId] = {
-          bakeryName: item.bakeryName,
-          bakeryId: item.bakeryId,
-          items: [],
-        }
-      }
-      groups[bakeryId].items.push(item)
-      return groups
-    },
-    {} as Record<string, { bakeryName: string; bakeryId: string; items: CartItem[] }>,
-  )
+  const groupedItems = cartItems.reduce((groups, item) => {
+    const bakeryId = item.bakeryId;
+    if (!groups[bakeryId]) {
+      groups[bakeryId] = {
+        bakeryName: item.bakeryName,
+        bakeryId: item.bakeryId,
+        items: [],
+      };
+    }
+    groups[bakeryId].items.push(item);
+    return groups;
+  }, {} as Record<string, { bakeryName: string; bakeryId: string; items: CartItem[] }>);
 
   const handleCheckout = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     // Simulate checkout process
     setTimeout(() => {
-      setIsLoading(false)
-      onClose()
+      setIsLoading(false);
+      onClose();
       // In real app, navigate to checkout page
-      window.location.href = "/checkout"
-    }, 1000)
-  }
+      window.location.href = "/checkout";
+    }, 1000);
+  };
 
   return (
     <>
       {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={onClose} />}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
+          onClick={onClose}
+        />
+      )}
 
       {/* Sidebar */}
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? "translate-x-0" : "translate-x-full hidden"
         }`}
       >
         <div className="flex flex-col h-full">
@@ -105,10 +115,16 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
             <div className="flex items-center">
               <ShoppingCart className="text-pink-600 mr-2 h-5 w-5" />
               <h2 className="text-lg font-semibold">
-                Giỏ hàng ({totalItems} {totalItems === 1 ? "sản phẩm" : "sản phẩm"})
+                Giỏ hàng ({totalItems}{" "}
+                {totalItems === 1 ? "sản phẩm" : "sản phẩm"})
               </h2>
             </div>
-            <Button variant="ghost" size="sm" onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700"
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -121,9 +137,16 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 <div className="bg-gray-100 rounded-full p-6 mb-4">
                   <ShoppingCart className="text-gray-400 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Giỏ hàng trống</h3>
-                <p className="text-gray-500 mb-6">Thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm</p>
-                <Button onClick={onClose} className="bg-pink-600 hover:bg-pink-700">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Giỏ hàng trống
+                </h3>
+                <p className="text-gray-500 mb-6">
+                  Thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm
+                </p>
+                <Button
+                  onClick={onClose}
+                  className="bg-pink-600 hover:bg-pink-700"
+                >
                   Tiếp tục mua sắm
                 </Button>
               </div>
@@ -146,8 +169,11 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
                 {/* Grouped by Bakery */}
                 <div className="space-y-6">
-                  {Object.values(groupedItems).map((group) => (
-                    <div key={group.bakeryId} className="border border-gray-200 rounded-lg p-4">
+                  {Object.values(groupedItems as any).map((group: any) => (
+                    <div
+                      key={group.bakeryId}
+                      className="border border-gray-200 rounded-lg p-4"
+                    >
                       {/* Bakery Header */}
                       <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
                         <Link
@@ -157,21 +183,26 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                         >
                           {group.bakeryName}
                         </Link>
-                        <span className="text-sm text-gray-500">{group.items.length} sản phẩm</span>
+                        <span className="text-sm text-gray-500">
+                          {group.items.length} sản phẩm
+                        </span>
                       </div>
 
                       {/* Items from this bakery */}
                       <div className="space-y-4">
-                        {group.items.map((item) => (
+                        {group.items.map((item: any) => (
                           <div key={item.id} className="space-y-3">
                             {/* Product Header with Image and Name */}
                             <div className="flex items-start space-x-3">
-                              <Link href={`/products/${item.productId}`} className="flex-shrink-0" onClick={onClose}>
+                              <Link
+                                href={`/products/${item.productId}`}
+                                className="flex-shrink-0"
+                                onClick={onClose}
+                              >
                                 <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200">
-                                  <Image
-                                    src={item.image || "/placeholder.svg"}
+                                  <img
+                                    src={`${API_URL}/api/images/file/${item?.image}`}
                                     alt={item.name}
-                                    fill
                                     className="object-cover"
                                   />
                                 </div>
@@ -186,11 +217,19 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                 </Link>
                                 {/* Product Options */}
                                 <div className="text-xs text-gray-500 mt-1">
-                                  {item.size && <span>Kích thước: {item.size}</span>}
-                                  {item.flavor && <span className="ml-2">Hương vị: {item.flavor}</span>}
+                                  {item.size && (
+                                    <span>Kích thước: {item.size}</span>
+                                  )}
+                                  {item.flavor && (
+                                    <span className="ml-2">
+                                      Hương vị: {item.flavor}
+                                    </span>
+                                  )}
                                 </div>
                                 {item.customization && (
-                                  <div className="text-xs text-gray-500">Tùy chỉnh: {item.customization}</div>
+                                  <div className="text-xs text-gray-500">
+                                    Tùy chỉnh: {item.customization}
+                                  </div>
                                 )}
                               </div>
                             </div>
@@ -208,7 +247,9 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                     </span>
                                   </div>
                                 ) : (
-                                  <span className="font-semibold text-pink-600 text-sm">{formatPrice(item.price)}</span>
+                                  <span className="font-semibold text-pink-600 text-sm">
+                                    {formatPrice(item.price)}
+                                  </span>
                                 )}
                               </div>
 
@@ -217,17 +258,23 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  onClick={() =>
+                                    updateQuantity(item.id, item.quantity - 1)
+                                  }
                                   disabled={item.quantity <= 1}
                                   className="h-7 w-7 p-0"
                                 >
                                   <Minus className="h-3 w-3" />
                                 </Button>
-                                <span className="w-6 text-center font-medium text-sm">{item.quantity}</span>
+                                <span className="w-6 text-center font-medium text-sm">
+                                  {item.quantity}
+                                </span>
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  onClick={() =>
+                                    updateQuantity(item.id, item.quantity + 1)
+                                  }
                                   className="h-7 w-7 p-0"
                                 >
                                   <Plus className="h-3 w-3" />
@@ -276,7 +323,8 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 </div>
                 {subtotal < 5000000 && deliveryFee > 0 && (
                   <div className="text-xs text-gray-500">
-                    Mua thêm {formatPrice(5000000 - subtotal)} để được miễn phí giao hàng
+                    Mua thêm {formatPrice(5000000 - subtotal)} để được miễn phí
+                    giao hàng
                   </div>
                 )}
                 <div className="flex justify-between font-semibold text-lg pt-2 border-t border-gray-300">
@@ -323,5 +371,5 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
         </div>
       </div>
     </>
-  )
+  );
 }

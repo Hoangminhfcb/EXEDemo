@@ -6,12 +6,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost",
-        port: "5000",
-        pathname: "/api/**",
-      },
-      {
-        protocol: "http",
         hostname: "api.zanis.id.vn",
         port: "",
         pathname: "/**",

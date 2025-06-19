@@ -1,87 +1,90 @@
-import type { TrackingInfo, TrackingRequest, OrderStatus, TrackingEvent } from "@/types/tracking"
-
-// Determine API base URL based on environment
-const isDevelopment = process.env.NODE_ENV === "development"
-const API_BASE_URL = isDevelopment ? "http://localhost:5000/api" : "http://api.zanis.id.vn/api"
+import type {
+  TrackingInfo,
+  TrackingRequest,
+  OrderStatus,
+  TrackingEvent,
+} from "@/types/tracking";
+import { API_URL } from "@/utils/BaseUrl";
 
 // Get tracking information by phone number
-export const getTrackingInfo = async (request: TrackingRequest): Promise<TrackingInfo | null> => {
+export const getTrackingInfo = async (
+  request: TrackingRequest
+): Promise<TrackingInfo | null> => {
   try {
     // Validate phone number is provided
     if (!request.phone) {
-      throw new Error("Phone number is required")
+      throw new Error("Phone number is required");
     }
 
-    console.log("Using API URL:", API_BASE_URL)
-    console.log("Calling API:", `${API_BASE_URL}/Orders/by-phone/${encodeURIComponent(request.phone)}`)
-
     // Call the real API endpoint with better error handling
-    const response = await fetch(`${API_BASE_URL}/Orders/by-phone/${encodeURIComponent(request.phone)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      // Add credentials if needed for cookies/auth
-      credentials: "include",
-      // Add cache control
-      cache: "no-cache",
-    })
+    const response = await fetch(
+      `${API_URL}/api/Orders/by-phone/${encodeURIComponent(request.phone)}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        // Add credentials if needed for cookies/auth
+        credentials: "include",
+        // Add cache control
+        cache: "no-cache",
+      }
+    );
 
-    console.log("Response status:", response.status)
+    console.log("Response status:", response.status);
 
     // Handle 404 - order not found
     if (response.status === 404) {
-      console.log("Order not found (404)")
-      return null
+      console.log("Order not found (404)");
+      return null;
     }
 
     // Handle other error responses
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error("API Error Response:", errorText)
-      throw new Error(`API Error: ${response.status} ${response.statusText}`)
+      const errorText = await response.text();
+      console.error("API Error Response:", errorText);
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
     }
 
     // Parse the response
-    const orderData = await response.json()
-    console.log("Order data received:", orderData)
+    const orderData = await response.json();
+    console.log("Order data received:", orderData);
 
     // If no orders found or empty array
     if (!orderData || (Array.isArray(orderData) && orderData.length === 0)) {
-      console.log("No orders found in response")
-      return null
+      console.log("No orders found in response");
+      return null;
     }
 
     // Take the first order if multiple orders are returned
-    const order = Array.isArray(orderData) ? orderData[0] : orderData
-    console.log("Processing order:", order)
+    const order = Array.isArray(orderData) ? orderData[0] : orderData;
+    console.log("Processing order:", order);
 
     // Map the API response to TrackingInfo interface
-    const trackingInfo: TrackingInfo = mapOrderToTrackingInfo(order)
+    const trackingInfo: TrackingInfo = mapOrderToTrackingInfo(order);
 
-    return trackingInfo
+    return trackingInfo;
   } catch (error) {
-    console.error("Error fetching tracking info:", error)
+    console.error("Error fetching tracking info:", error);
 
     // Provide more specific error messages for common errors
-    if (error instanceof TypeError && error.message.includes("Failed to fetch")) {
-      if (isDevelopment) {
-        throw new Error(
-          "Không thể kết nối đến server",
-        )
-      } else {
-        throw new Error("Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng hoặc liên hệ hỗ trợ.")
-      }
+    if (
+      error instanceof TypeError &&
+      error.message.includes("Failed to fetch")
+    ) {
+      throw new Error("Không thể kết nối đến server");
+    } else {
+      throw new Error(
+        "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng hoặc liên hệ hỗ trợ."
+      );
     }
-
-    throw error
   }
-}
+};
 
 // Update the mapOrderToTrackingInfo function to properly handle your OrderDTO structure
 const mapOrderToTrackingInfo = (order: any): TrackingInfo => {
-  console.log("Mapping order to tracking info:", order)
+  console.log("Mapping order to tracking info:", order);
 
   // Map your OrderStatus enum to display statuses
   const orderStatuses: Record<string, OrderStatus> = {
@@ -134,16 +137,16 @@ const mapOrderToTrackingInfo = (order: any): TrackingInfo => {
       description: "Đơn hàng đã bị hủy",
       color: "red",
     },
-  }
+  };
 
   // Get the status based on the enum value
-  const currentStatus = orderStatuses[order.status] || orderStatuses[0]
+  const currentStatus = orderStatuses[order.status] || orderStatuses[0];
 
   // Handle potential string format of ID
-  const orderId = typeof order.id === "string" ? order.id : String(order.id)
+  const orderId = typeof order.id === "string" ? order.id : String(order.id);
 
   // Create tracking number from ID
-  const trackingNumber = `BM${orderId.substring(0, 8).toUpperCase()}`
+  const trackingNumber = `BM${orderId.substring(0, 8).toUpperCase()}`;
 
   return {
     orderId: orderId,
@@ -152,10 +155,16 @@ const mapOrderToTrackingInfo = (order: any): TrackingInfo => {
     estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from order date
     actualDelivery: order.status === 5 ? new Date() : undefined, // If delivered
     shippingMethod: "Giao hàng tiêu chuẩn",
-    carrier: order.driver ? `${order.driver.firstName} ${order.driver.lastName}` : "Đang phân công",
-    recipientName: order.customer ? `${order.customer.firstName} ${order.customer.lastName}` : "Khách hàng",
+    carrier: order.driver
+      ? `${order.driver.firstName} ${order.driver.lastName}`
+      : "Đang phân công",
+    recipientName: order.customer
+      ? `${order.customer.firstName} ${order.customer.lastName}`
+      : "Khách hàng",
     shippingAddress: {
-      fullName: order.customer ? `${order.customer.firstName} ${order.customer.lastName}` : "Khách hàng",
+      fullName: order.customer
+        ? `${order.customer.firstName} ${order.customer.lastName}`
+        : "Khách hàng",
       address: order.deliveryAddress || "",
       district: "", // Extract from deliveryAddress if needed
       city: "", // Extract from deliveryAddress if needed
@@ -163,13 +172,13 @@ const mapOrderToTrackingInfo = (order: any): TrackingInfo => {
     },
     trackingHistory: generateTrackingHistory(order),
     orderItems: mapOrderItems(order.items || []),
-  }
-}
+  };
+};
 
 // Generate tracking history based on order status and date
 const generateTrackingHistory = (order: any): TrackingEvent[] => {
-  const orderDate = new Date(order.orderDate)
-  const events: TrackingEvent[] = []
+  const orderDate = new Date(order.orderDate);
+  const events: TrackingEvent[] = [];
 
   // Always add order placed event
   events.push({
@@ -179,7 +188,7 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
     location: order.bakery?.name || "Tiệm bánh",
     description: "Đơn hàng đã được đặt thành công",
     isCompleted: true,
-  })
+  });
 
   // Add events based on current status
   if (order.status >= 1) {
@@ -191,7 +200,7 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
       location: order.bakery?.name || "Tiệm bánh",
       description: "Đơn hàng đã được xác nhận và đang chuẩn bị",
       isCompleted: true,
-    })
+    });
   }
 
   if (order.status >= 2) {
@@ -203,7 +212,7 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
       location: order.bakery?.name || "Tiệm bánh",
       description: "Đang chuẩn bị bánh theo yêu cầu của bạn",
       isCompleted: true,
-    })
+    });
   }
 
   if (order.status >= 3) {
@@ -215,7 +224,7 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
       location: order.bakery?.name || "Tiệm bánh",
       description: "Bánh đã được hoàn thành và sẵn sàng giao hàng",
       isCompleted: true,
-    })
+    });
   }
 
   if (order.status >= 4) {
@@ -229,7 +238,7 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
         ? `${order.driver.firstName} ${order.driver.lastName} đang giao hàng đến bạn`
         : "Đang giao hàng đến địa chỉ của bạn",
       isCompleted: true,
-    })
+    });
   }
 
   if (order.status >= 5) {
@@ -241,7 +250,7 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
       location: order.deliveryAddress || "Địa chỉ giao hàng",
       description: "Đơn hàng đã được giao thành công",
       isCompleted: true,
-    })
+    });
   }
 
   if (order.status === 6) {
@@ -253,26 +262,26 @@ const generateTrackingHistory = (order: any): TrackingEvent[] => {
       location: order.bakery?.name || "Tiệm bánh",
       description: "Đơn hàng đã bị hủy",
       isCompleted: true,
-    })
+    });
   }
 
-  return events.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
-}
+  return events.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+};
 
 // Update the mapOrderItems function to handle OrderItemDTO
 const mapOrderItems = (items: any[]) => {
   if (!Array.isArray(items)) {
-    return []
+    return [];
   }
 
   return items.map((item) => ({
     id: item.id || item.productId,
-    name: item.product?.name || item.productName || "Sản phẩm",
-    image: item.product?.imageUrl || "/placeholder.svg?height=400&width=400",
+    name: item.cake?.name || item.productName || "Sản phẩm",
+    image: item.cake?.thumbnailUrl || "",
     quantity: item.quantity || 1,
     price: item.subtotal || item.unitPrice || 0,
-  }))
-}
+  }));
+};
 
 // Get order status by code
 export const getOrderStatus = (statusCode: string): OrderStatus => {
@@ -313,12 +322,14 @@ export const getOrderStatus = (statusCode: string): OrderStatus => {
       description: "Đơn hàng đã bị hủy",
       color: "red",
     },
-  }
+  };
 
-  return statuses[statusCode] || statuses.pending
-}
+  return statuses[statusCode] || statuses.pending;
+};
 
 // Format tracking events for timeline display
-export const formatTrackingEvents = (events: TrackingEvent[]): TrackingEvent[] => {
-  return events.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-}
+export const formatTrackingEvents = (
+  events: TrackingEvent[]
+): TrackingEvent[] => {
+  return events.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+};

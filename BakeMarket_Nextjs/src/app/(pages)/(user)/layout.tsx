@@ -18,8 +18,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       {!isCheckoutPage &&
         !pathName.startsWith("/products/") &&
         !pathName.startsWith("/cart") &&
-        !pathName.startsWith("/checkout") &&
-        !isBakeryPage && <Banner />}
+        !pathName.startsWith("/checkout")}
       <main className="flex-grow">{children}</main>
       {!isCheckoutPage &&
         !pathName.startsWith("/cart") &&

@@ -13,7 +13,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     >
       <Link href={`/productDetail/${product.id}`} className="block">
         <div className="relative">
-          <Image
+          <img
             src={
               `${API_URL}/api/images/file/${product.thumbnailUrl}` ||
               "http://localhost:5000/api/images/file/BakeMarket/Cakes/7fd08f81-a823-4874-bd97-9f2efadc1bdb_Gato Ganache.jpg"

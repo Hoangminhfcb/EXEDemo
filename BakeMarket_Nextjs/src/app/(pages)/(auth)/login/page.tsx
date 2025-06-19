@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { SignInRequest } from "@/types/request/SignInRequest";
 import { loginUser } from "@/services/authService";
 import toast, { Toaster } from "react-hot-toast";
-import { da } from "date-fns/locale";
+import jwt from "jsonwebtoken";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -59,7 +59,9 @@ const SignIn = () => {
       );
       setTimeout(() => {
         if (data.roles.includes("BakeryOwner")) {
-          router.push("/bakery/mybakery");
+          const decoded = jwt.decode(data.accessToken);
+          const userId = decoded?.sub; // Standard JWT claim
+          router.push(`/bakery/${userId}`);
         } else {
           router.push("/");
         }

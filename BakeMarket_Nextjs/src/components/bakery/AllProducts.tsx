@@ -8,7 +8,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { API_URL } from "@/utils/BaseUrl";
 
-export default function AllProducts({ bakeryId }: { bakeryId: string }) {
+export default function AllProducts({
+  bakeryId,
+  isOwner,
+}: {
+  bakeryId: string;
+  isOwner: boolean;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
@@ -78,12 +84,14 @@ export default function AllProducts({ bakeryId }: { bakeryId: string }) {
         <h2 className="text-xl font-semibold">
           Tất cả sản phẩm ({products.length})
         </h2>
-        <button
-          className="text-pink-600 hover:text-pink-700 flex items-center text-sm"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <FaPlus className="mr-1" /> Thêm sản phẩm
-        </button>
+        {isOwner && (
+          <button
+            className="text-pink-600 hover:text-pink-700 flex items-center text-sm"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <FaPlus className="mr-1" /> Thêm sản phẩm
+          </button>
+        )}
       </div>
 
       {isLoading ? (
@@ -100,11 +108,13 @@ export default function AllProducts({ bakeryId }: { bakeryId: string }) {
         </div>
       )}
 
-      <AddProductModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSuccess={handleAddProductSuccess}
-      />
+      {isOwner && (
+        <AddProductModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleAddProductSuccess}
+        />
+      )}
 
       {totalPages > 1 && (
         <div className="flex justify-center mt-6 space-x-2">

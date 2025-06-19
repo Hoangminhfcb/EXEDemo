@@ -14,4 +14,9 @@ export interface Product {
   bakery?: Bakery;
   createdAt: Date;
   isActive: boolean;
+  images: Image[];
+}
+
+export interface Image {
+  imageUrl: string;
 }

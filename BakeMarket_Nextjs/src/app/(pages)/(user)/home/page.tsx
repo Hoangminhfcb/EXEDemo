@@ -1,10 +1,30 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Foodter";
 import SystemBanner from "@/components/layouts/Banner";
+import { Product } from "@/types/product";
+import { API_URL } from "@/utils/BaseUrl";
+import { useEffect, useState } from "react";
 
 export default function CakeEcommerceLanding() {
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/Cakes`);
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* System Banner */}
@@ -81,74 +101,20 @@ export default function CakeEcommerceLanding() {
               className="flex overflow-x-auto scrollbar-hide gap-6 pb-4"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {[
-                {
-                  name: "Bánh Cưới Sang Trọng",
-                  description: "Ba tầng bánh vanilla với hoa hồng tươi",
-                  price: "7.200.000₫",
-                  tag: "Phổ Biến",
-                },
-                {
-                  name: "Bánh Sinh Nhật Vui Nhộn",
-                  description: "Lớp chocolate với rắc cầu vồng",
-                  price: "2.100.000₫",
-                  tag: "Mới",
-                },
-                {
-                  name: "Bánh Kỷ Niệm Đặc Biệt",
-                  description: "Red velvet với kem phô mai",
-                  price: "3.100.000₫",
-                  tag: "Giới Hạn",
-                },
-                {
-                  name: "Bánh Thiết Kế Riêng",
-                  description: "Sáng tạo cá nhân cho sự kiện của bạn",
-                  price: "4.800.000₫",
-                  tag: "Tùy Chỉnh",
-                },
-                {
-                  name: "Tháp Cupcake",
-                  description: "24 chiếc cupcake cao cấp đa dạng",
-                  price: "1.900.000₫",
-                  tag: "Bán Chạy",
-                },
-                {
-                  name: "Bánh Theo Mùa",
-                  description: "Trái cây tươi và hương vị theo mùa",
-                  price: "3.600.000₫",
-                  tag: "Theo Mùa",
-                },
-                {
-                  name: "Bánh Sự Kiện Doanh Nghiệp",
-                  description: "Thiết kế chuyên nghiệp cho sự kiện công ty",
-                  price: "6.000.000₫",
-                  tag: "Doanh Nghiệp",
-                },
-                {
-                  name: "Bánh Tiệc Trẻ Em",
-                  description: "Thiết kế đầy màu sắc hoàn hảo cho trẻ em",
-                  price: "2.400.000₫",
-                  tag: "Trẻ Em",
-                },
-              ].map((product, index) => (
+              {products.map((product, index) => (
                 <div
                   key={index}
                   className="flex-none w-80 group cursor-pointer"
                 >
                   <div className="relative overflow-hidden rounded-lg mb-4">
-                    <Image
-                      src={`/placeholder.svg?height=400&width=400`}
+                    <img
+                      src={`${API_URL}/api/images/file/${product.thumbnailUrl}`}
                       alt={product.name}
                       width={400}
                       height={400}
                       className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                      <span className="text-sm font-medium text-gray-900">
-                        {product.tag}
-                      </span>
-                    </div>
                   </div>
                   <h3 className="text-xl font-medium text-gray-900 mb-2">
                     {product.name}
@@ -174,60 +140,6 @@ export default function CakeEcommerceLanding() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
-              Thư Viện Của Chúng Tôi
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Duyệt qua bộ sưu tập những chiếc bánh đẹp mắt của chúng tôi
-            </p>
-          </div>
-
-          {/* Masonry-style Gallery with Horizontal Scroll */}
-          <div className="relative">
-            <div
-              className="flex overflow-x-auto scrollbar-hide gap-4 pb-4"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-                <div key={item} className="flex-none">
-                  <div
-                    className={`relative overflow-hidden rounded-lg cursor-pointer group ${
-                      item % 3 === 0
-                        ? "w-64 h-80"
-                        : item % 2 === 0
-                        ? "w-48 h-64"
-                        : "w-56 h-72"
-                    }`}
-                  >
-                    <Image
-                      src={`/placeholder.svg?height=${
-                        item % 3 === 0 ? 320 : item % 2 === 0 ? 256 : 288
-                      }&width=${
-                        item % 3 === 0 ? 256 : item % 2 === 0 ? 192 : 224
-                      }`}
-                      alt={`Gallery image ${item}`}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="font-medium">Custom Design</p>
-                      <p className="text-sm text-white/80">
-                        Premium Collection
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Categories Scroll Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -247,34 +159,24 @@ export default function CakeEcommerceLanding() {
             >
               {[
                 {
-                  name: "Bánh Cưới",
-                  count: "24 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
-                },
-                {
                   name: "Bánh Sinh Nhật",
                   count: "36 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
+                  image: "/birthday_cake.jpg",
                 },
                 {
-                  name: "Thiết Kế Riêng",
+                  name: "Lễ Kỉ Niệm",
                   count: "18 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
+                  image: "/custom_cake.jpg",
                 },
                 {
-                  name: "Cupcakes",
+                  name: "Bánh Nhỏ",
                   count: "42 loại",
-                  image: "/placeholder.svg?height=300&width=400",
+                  image: "/cup_cake.jpg",
                 },
                 {
                   name: "Bánh Theo Mùa",
                   count: "12 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
-                },
-                {
-                  name: "Sự Kiện Doanh Nghiệp",
-                  count: "15 mẫu",
-                  image: "/placeholder.svg?height=300&width=400",
+                  image: "/images.jpg",
                 },
               ].map((category, index) => (
                 <div
@@ -282,7 +184,7 @@ export default function CakeEcommerceLanding() {
                   className="flex-none w-72 group cursor-pointer"
                 >
                   <div className="relative overflow-hidden rounded-xl">
-                    <Image
+                    <img
                       src={category.image || "/placeholder.svg"}
                       alt={category.name}
                       width={400}
@@ -328,8 +230,8 @@ export default function CakeEcommerceLanding() {
               </Button>
             </div>
             <div className="relative">
-              <Image
-                src="/placeholder.svg?height=500&width=600"
+              <img
+                src="/photo-3-16497648997512065397697.jpg"
                 alt="Baker crafting a cake"
                 width={600}
                 height={500}
@@ -339,9 +241,6 @@ export default function CakeEcommerceLanding() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

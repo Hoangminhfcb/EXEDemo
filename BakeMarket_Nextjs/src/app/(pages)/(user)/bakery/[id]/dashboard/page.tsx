@@ -22,6 +22,8 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import { API_URL } from "@/utils/BaseUrl";
+import { getOrderByBakeryId } from "@/services/checkoutService";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -47,32 +49,13 @@ export default function BakeryDashboard({ params }: PageProps) {
       pendingOrders: 8,
     };
 
-    const mockRecentOrders = [
-      {
-        id: "ORD-001",
-        customerName: "Nguyễn Văn A",
-        productName: "Bánh Sinh Nhật Hoa Tươi",
-        amount: 299000,
-        status: "pending",
-        date: "2024-01-15",
-      },
-      {
-        id: "ORD-002",
-        customerName: "Trần Thị B",
-        productName: "Bánh Cưới Sang Trọng",
-        amount: 999000,
-        status: "completed",
-        date: "2024-01-14",
-      },
-      {
-        id: "ORD-003",
-        customerName: "Lê Văn C",
-        productName: "Cupcake Bơ Vani",
-        amount: 120000,
-        status: "processing",
-        date: "2024-01-14",
-      },
-    ];
+    // Mock fetchOrder function to get orders by bakeryId
+    const fetchOrder = async (bakeryId: string) => {
+      const res = await getOrderByBakeryId(bakeryId);
+      setRecentOrders(res.orderDTO);
+    };
+
+    fetchOrder(bakeryId);
 
     const mockChartData = [
       { name: "T1", orders: 65, revenue: 3200000 },
@@ -85,9 +68,31 @@ export default function BakeryDashboard({ params }: PageProps) {
     ];
 
     setStats(mockStats);
-    setRecentOrders(mockRecentOrders);
+
     setChartData(mockChartData);
   }, [bakeryId]);
+
+  const handleUpdateStatus = async (orderId: string, newStatus: number) => {
+    try {
+      const res = await fetch(`${API_URL}/api/orders/${orderId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newStatus), // Ví dụ: cập nhật status từ 0 → 1
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update order status");
+      }
+
+      // Cập nhật lại giao diện nếu cần (ví dụ gọi lại API để load danh sách)
+      const resOrders = await getOrderByBakeryId(bakeryId);
+      setRecentOrders(resOrders.orderDTO);
+    } catch (err) {
+      console.error("Lỗi cập nhật đơn hàng:", err);
+    }
+  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -96,33 +101,49 @@ export default function BakeryDashboard({ params }: PageProps) {
     }).format(price);
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: number) => {
     switch (status) {
-      case "pending":
+      case 0: // Pending
         return "bg-yellow-100 text-yellow-800";
-      case "processing":
+      case 1: // Confirmed
+        return "bg-indigo-100 text-indigo-800";
+      case 2: // InProgress
         return "bg-blue-100 text-blue-800";
-      case "completed":
+      case 3: // Ready
         return "bg-green-100 text-green-800";
-      case "cancelled":
+      case 4: // OutForDelivery
+        return "bg-orange-100 text-orange-800";
+      case 5: // Delivered
+        return "bg-emerald-100 text-emerald-800";
+      case 6: // Cancelled
+        return "bg-gray-100 text-gray-800";
+      case 7: // Refunded
         return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
 
-  const getStatusText = (status: string) => {
+  const getStatusText = (status: number) => {
     switch (status) {
-      case "pending":
-        return "Chờ xử lý";
-      case "processing":
+      case 0:
+        return "Chờ xác nhận";
+      case 1:
+        return "Đã xác nhận";
+      case 2:
         return "Đang làm";
-      case "completed":
-        return "Hoàn thành";
-      case "cancelled":
+      case 3:
+        return "Sẵn sàng";
+      case 4:
+        return "Đang giao";
+      case 5:
+        return "Đã giao";
+      case 6:
         return "Đã hủy";
+      case 7:
+        return "Đã hoàn tiền";
       default:
-        return status;
+        return "Không xác định";
     }
   };
 
@@ -329,7 +350,7 @@ export default function BakeryDashboard({ params }: PageProps) {
                     Trạng thái
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Ngày
+                    Hành động
                   </th>
                 </tr>
               </thead>
@@ -340,13 +361,13 @@ export default function BakeryDashboard({ params }: PageProps) {
                       {order.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {order.customerName}
+                      {order.customer.fullName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {order.productName}
+                      {order.items[0].cake.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatPrice(order.amount)}
+                      {formatPrice(order.totalAmount)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
@@ -358,7 +379,59 @@ export default function BakeryDashboard({ params }: PageProps) {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(order.date).toLocaleDateString("vi-VN")}
+                      {order.status === 0 && (
+                        <button
+                          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                          onClick={() => handleUpdateStatus(order.id, 1)} // Confirmed
+                        >
+                          Xác nhận đơn
+                        </button>
+                      )}
+
+                      {order.status === 1 && (
+                        <button
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
+                          onClick={() => handleUpdateStatus(order.id, 2)} // InProgress
+                        >
+                          Bắt đầu làm
+                        </button>
+                      )}
+
+                      {order.status === 2 && (
+                        <button
+                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                          onClick={() => handleUpdateStatus(order.id, 3)} // Ready
+                        >
+                          Hoàn tất đơn
+                        </button>
+                      )}
+
+                      {order.status === 3 && (
+                        <button
+                          className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded"
+                          onClick={() => handleUpdateStatus(order.id, 4)} // OutForDelivery
+                        >
+                          Giao hàng
+                        </button>
+                      )}
+
+                      {order.status === 4 && (
+                        <button
+                          className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded"
+                          onClick={() => handleUpdateStatus(order.id, 5)} // Delivered
+                        >
+                          Đã giao
+                        </button>
+                      )}
+
+                      {order.status < 5 && (
+                        <button
+                          className="ml-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                          onClick={() => handleUpdateStatus(order.id, 6)} // Cancelled
+                        >
+                          Hủy đơn
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
