@@ -1,110 +1,105 @@
-🍰 BakeMarket – Kết nối Tiệm Bánh và Người Mua
-BakeMarket là một nền tảng trung gian kết nối các tiệm bánh với người mua, được khởi đầu trong môn học EXE. Dự án hỗ trợ website và ứng dụng Android, mang đến trải nghiệm tiện lợi cho người dùng.
+# 🎂 BakeMarket – Kết nối Tiệm Bánh và Người Mua
 
-🚀 Demo & Triển khai
+**BakeMarket** là một nền tảng trung gian kết nối các **tiệm bánh** với **người mua**, khởi nguồn từ môn học EXE. Dự án gồm **website** và **ứng dụng Android**, mang lại trải nghiệm tiện lợi, hiện đại và dễ triển khai.
 
-🌐 Website: https://exe.zanis.id.vn  
-🔌 API: https://api.zanis.id.vn
+---
 
+## 📌 Tổng quan
 
-🧱 Kiến trúc hệ thống
-Hệ thống bao gồm các thành phần chính:
+- **🎯 Mục tiêu**: Tạo cầu nối thân thiện giữa tiệm bánh và khách hàng.  
+- **📦 Phạm vi**: Website, RESTful API và ứng dụng Android.  
+- **🌟 Đặc điểm nổi bật**:
+  - Tối ưu SEO (SSR).
+  - Giao diện thân thiện, dễ sử dụng.
+  - Triển khai đơn giản bằng Docker.
 
+---
 
+## 🚀 Demo & Triển khai
 
-Thành phần
-Công nghệ sử dụng
-Mô tả
+- 🌐 Website: [https://exe.zanis.id.vn](https://exe.zanis.id.vn)  
+- 🔌 API: [https://api.zanis.id.vn](https://api.zanis.id.vn)
 
+---
 
+## 🧱 Kiến trúc hệ thống
 
-🎯 Backend API
-ASP.NET Core, Entity Framework
-Cung cấp RESTful APIs
+| Thành phần         | Công nghệ sử dụng                  | Mô tả                          |
+|--------------------|------------------------------------|--------------------------------|
+| **Backend API**    | ASP.NET Core, Entity Framework     | Cung cấp RESTful API           |
+| **Frontend Web**   | Next.js (React), Tailwind CSS      | SSR tối ưu SEO, giao diện UI   |
+| **Ứng dụng Android**| Android (Java), Retrofit, WebSocket| Giao diện di động thân thiện  |
+| **Lưu trữ ảnh**    | NextCloud tự host                  | Lưu ảnh sản phẩm & người dùng |
+| **Triển khai**     | Docker, Docker Compose             | Triển khai đồng bộ nhiều dịch vụ |
 
+---
 
-🌐 Frontend Web
-Next.js (React), Tailwind CSS
-Tối ưu SEO với Server-Side Rendering (SSR)
+## 🛠️ Công nghệ sử dụng
 
+### 🔧 Backend
+- ASP.NET Core 7+
+- Entity Framework (Code First)
+- RESTful APIs
 
-📱 Ứng dụng Android
-Android (Java)
-Ứng dụng di động độc lập
+### 🎨 Frontend
+- Next.js (React)
+- Axios
+- Tailwind CSS
 
+### 📱 Mobile App
+- Android Studio (Java)
+- Retrofit
+- WebSocket
 
-☁️ Lưu trữ ảnh
-NextCloud cá nhân
-Lưu trữ ảnh sản phẩm và người dùng
+### ☁️ Công cụ khác
+- Lưu trữ ảnh: NextCloud tự host
+- Triển khai: Docker & Docker Compose
 
+---
 
-🐳 Triển khai
-Docker, Docker Compose
-Triển khai đồng thời Web và API
+## ⚙️ Hướng dẫn cài đặt
 
+### 🐳 Sử dụng Docker Compose
 
+**Yêu cầu:**
+- Cài đặt [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
 
-🧩 Công nghệ sử dụng
-Backend
+**Cách chạy:**
+```bash
+docker-compose up --build
+```
 
-.NET Core 7+
-Entity Framework (Code First)
-RESTful APIs
+**Truy cập dịch vụ:**
+- Frontend: `http://localhost:3000`
+- API: `http://localhost:5000`
 
-Frontend
+> 💡 Lưu ý: Kiểm tra và điều chỉnh file `.env` hoặc `docker-compose.yml` nếu cần cấu hình riêng.
 
-Next.js (React)
-Axios
-Tailwind CSS
+---
 
-Mobile App
+### 📱 Chạy ứng dụng Android
 
-Android Studio (Java)
-Retrofit
-WebSocket
+1. Mở thư mục `android-app` bằng Android Studio.
+2. Cấu hình `baseUrl` của API:
+   - Local: `http://10.0.2.2:5000`
+   - Production: `https://api.zanis.id.vn`
+3. Build và chạy ứng dụng trên máy ảo hoặc thiết bị thật.
 
-Khác
+---
 
-Lưu trữ ảnh: NextCloud tự host  
-Triển khai: Docker & Docker Compose
+## 👥 Thành viên nhóm
 
+| Thành viên              | Vai trò                |
+|-------------------------|------------------------|
+| Hoàng Lê Nhật Minh      | Backend & DevOps       |
+| Minh Hoàng Lê Nhật      | Frontend               |
+| Nhật Minh Hoàng Lê      | Mobile App             |
 
-⚙️ Hướng dẫn chạy dự án
-🐳 Chạy bằng Docker Compose
-Yêu cầu:
+> 😄 Các contributor khác chủ yếu hỗ trợ tinh thần và "chạy KPI".
 
-Docker
-Docker Compose
+---
 
-Bước thực hiện:
+## 📜 Giấy phép
 
-Chạy lệnh:docker-compose up --build
-
-
-Truy cập:
-Frontend: http://localhost:3000  
-API: http://localhost:5000
-
-
-
-Lưu ý:  
-
-Cấu hình biến môi trường trong file .env hoặc docker-compose.yml nếu cần.
-
-📱 Chạy ứng dụng Android
-
-Mở thư mục android-app bằng Android Studio.  
-Cấu hình base URL của API trong code (ví dụ: https://api.zanis.id.vn hoặc http://10.0.2.2:5000 nếu chạy local).  
-Build và chạy ứng dụng trên máy ảo hoặc thiết bị thật.
-
-
-👨‍👩‍👧‍👦 Thành viên nhóm
-
-Hoàng Lê Nhật Minh: Backend & DevOps  
-Minh Hoàng Lê Nhật: Frontend  
-Nhật Minh Hoàng Lê: Mobile App
-
-Lưu ý: Các contributor khác chỉ hỗ trợ tinh thần 😄.
-
-📜 Giấy phép sử dụng
-Dự án được phát triển cho mục đích học tập và phi thương mại. Vui lòng liên hệ nhóm nếu muốn sử dụng cho mục đích thương mại.
+Dự án được phát triển cho **mục đích học tập và phi thương mại**.  
+Vui lòng liên hệ nhóm nếu bạn muốn sử dụng trong các hoạt động thương mại.
